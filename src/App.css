@@ -76,9 +76,7 @@ input[type=submit]:hover {
   min-height: 500px;
   margin: 0 25px;
 }
-.inputs h1{
-  margin-top:0 ;
-}
+
 .inputs button {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
