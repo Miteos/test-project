@@ -20,14 +20,14 @@ export function createTableStore() {
         sortByAuthor(){
             this.data.sort((a, b) => a.author.localeCompare(b.author))
         },
-        // addBook(id,author,title,status){
-        //     this.data.push([{
-        //         id,
-        //         author,
-        //         title,
-        //         status
-        //     }])
-        // },
+        addBook(id,author,title,status){
+            this.data.push({
+                id,
+                author,
+                title,
+                status
+            })
+        },
         removeBook(title){
           this.data = this.data.filter(b => b.title !== title)
         }

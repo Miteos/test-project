@@ -9,13 +9,7 @@ const  DataTable = () => {
 
     return (
         <Observer>{() =>
-            <div>
-                <select value={selectInput} onChange={(e) =>setSelectInput(e.target.value)}>
-                    <option defaultValue value={0}>All</option>
-                    <option value={1}>Completed</option>
-                    <option value={2}>To-Read</option>
-                </select>
-                <button onClick={books.filterByStatus(selectInput)}>Filter</button>
+            <div className="inputs">
             <table className="styled-table">
             <thead>
             <tr>
@@ -38,6 +32,12 @@ const  DataTable = () => {
             ))}
             </tbody>
         </table>
+                <select value={selectInput} onChange={(e) =>setSelectInput(e.target.value)}>
+                    <option defaultValue value={0}>All</option>
+                    <option value={1}>Completed</option>
+                    <option value={2}>To-Read</option>
+                </select>
+                <button onClick={books.filterByStatus(selectInput)}>Filter</button>
             </div>}
         </Observer>
     )

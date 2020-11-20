@@ -1,6 +1,7 @@
 .App {
   display: flex;
   height: 100vh;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
 }
@@ -43,4 +44,72 @@
 .clickable:hover {
   cursor: pointer;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+input[type=text], select {
+  width: 300px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=submit] {
+  width: 300px;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+.inputs{
+  display: flex;
+  flex-direction: column;
+  min-width: 400px;
+  min-height: 500px;
+  margin: 0 25px;
+}
+.inputs h1{
+  margin-top:0 ;
+}
+.inputs button {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  list-style: none;
+  letter-spacing: 0.015em;
+  text-decoration: none;
+  display: flex;
+  width: 177px;
+  height: 40px;
+  border: 0;
+  line-height: 30px;
+  color: #fff;
+  text-shadow: 0 0 1px #bbb;
+  background: linear-gradient(45deg, #ff5c44 20%, #ff8b1a 50%);
+  background-image: linear-gradient(to left, #fc6076, #ff8b1a, #ff5c44);
+  box-shadow: 0 5px 12px 4px rgba(0, 0, 0, 0.15);
+  justify-content: center;
+  text-indent: 0;
+  color: white !important;
+  font-weight: 400;
+  font-size: 16px;
+  padding: 4.5px 30px;
+  position: relative;
+  transition: all 0.2s ease-in-out;
+  background-size: 200% 100%;
+}
+
+.inputs button:hover {
+  background-position: 100% 0;
+  cursor: pointer;
+  text-decoration: none;
+  -webkit-box-shadow: 0 5px 12px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 5px 12px 4px rgba(0, 0, 0, 0.25);
 }
