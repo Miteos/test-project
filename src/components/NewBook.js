@@ -13,7 +13,7 @@ const NewBook = () => {
             <input placeholder="Author Name*" type="text" value={authorInput} onChange={(e) =>setAuthorInput(e.target.value)}/>
             <input placeholder="Book Name*" type="text" value={bookInput} onChange={(e) =>setBookInput(e.target.value)}/>
             <select value={statusInput} onChange={(e) =>setStatusInput(e.target.value)}>
-                <option hidden>Choose reading status</option>
+                <option hidden>Choose reading status*</option>
                 <option value={"completed"}>Completed</option>
                 <option value={"to-read"}>To-Read</option>
             </select>

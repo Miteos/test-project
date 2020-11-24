@@ -6,11 +6,12 @@ import NewBook from "./components/NewBook";
 
 
 
+
 function App(){
         return (
                 <div className="App">
-                  <DataTable/>
-                  <NewBook/>
+                      <DataTable/>
+                      <NewBook/>
                 </div>
 
         );

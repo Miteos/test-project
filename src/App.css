@@ -8,6 +8,7 @@
 
 .styled-table {
   border-collapse: collapse;
+  border-radius:5px ;
   margin: 25px 0;
   font-size: 0.9em;
   font-family: sans-serif;
@@ -19,6 +20,9 @@
   background-color: #009879;
   color: #ffffff;
   text-align: left;
+}
+.styled-table thead{
+  border-radius: 10px;
 }
 
 .styled-table th,
@@ -87,8 +91,8 @@ input[type=submit]:hover {
   width: 177px;
   height: 40px;
   border: 0;
+  border-radius:5px ;
   line-height: 30px;
-  color: #fff;
   text-shadow: 0 0 1px #bbb;
   background: linear-gradient(45deg, #ff5c44 20%, #ff8b1a 50%);
   background-image: linear-gradient(to left, #fc6076, #ff8b1a, #ff5c44);
@@ -111,3 +115,26 @@ input[type=submit]:hover {
   -webkit-box-shadow: 0 5px 12px 4px rgba(0, 0, 0, 0.25);
   box-shadow: 0 5px 12px 4px rgba(0, 0, 0, 0.25);
 }
+.pagination {
+  display: flex;
+  list-style: none;
+  padding: 0;
+}
+.pagination span {
+  cursor: pointer;
+  color: black;
+  padding: 5px 10px;
+  margin: 0 5px;
+  display: block;
+  text-decoration: none;
+  border: thin solid #ccc;
+}
+.pagination .active{
+  background-color: #009879;
+  color:  #f3f3f3;
+}
+.pagination span:hover{
+  -webkit-box-shadow: 0 5px 12px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 5px 12px 4px rgba(0, 0, 0, 0.25);
+}
+

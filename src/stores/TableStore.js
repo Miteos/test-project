@@ -1,5 +1,8 @@
 export function createTableStore() {
     return{
+        tableSize: 5,
+        currentPage : 1,
+        pageNumber:'',
         headers:['id','author','title','status'],
         data:[
             {id:1, author:'Brandon Sanderson', title:'The Way of Kings', status:'completed'},
@@ -11,9 +14,9 @@ export function createTableStore() {
             {id:7, author:'Robin Hobb', title: 'Assassins Fate', status:'completed'},
             {id:8, author:'Aleron Kong', title: 'The Land:Predators', status:'to-read'},
         ],
-        filterByStatus(value){
-            console.log(value);
-        },
+        // filterByStatus(value){
+        //     console.log(value);
+        // },
         sortById(){
             this.data.reverse();
         },
@@ -28,9 +31,19 @@ export function createTableStore() {
                 status
             })
         },
-        removeBook(title){
-          this.data = this.data.filter(b => b.title !== title)
-        }
+        removeBook(id){
+          this.data = this.data.filter(b => b.id !== id)
+        },
+        paginate(pageNumber){
+           this.currentPage = pageNumber;
+           console.log(this.currentPage)
+        },
+        get paginatedBooks(){
+            const indexLastBook = this.currentPage * this.tableSize;
+            const indexFirstBook = indexLastBook - this.tableSize;
+            return  this.data.slice( indexFirstBook,indexLastBook);
+            },
+
     }
 }
 
