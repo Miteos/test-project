@@ -6,10 +6,7 @@ import Pagination from "./Pagination";
 
 const  DataTable = () => {
     const books = useTableStore();
-    const [selectInput, setSelectInput] = React.useState("");
-
-
-
+    // const [selectInput, setSelectInput] = React.useState("");
 
     return (
         <Observer>{() =>
