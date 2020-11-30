@@ -1,5 +1,6 @@
 import React from 'react'
-import {action, observable} from "mobx";
+import {inject, observer} from "mobx-react";
+import {computed} from "mobx";
 
 
 // class NewBook extends React.Component = () => {
@@ -22,26 +23,26 @@ import {action, observable} from "mobx";
 //         </div>
 //     )
 // };
-class NewBook extends React.Component{
-    @action handleInputChange = (e) => {
-        this[e.target.name] = e.target.value
-    };
-    @observable id ='';
-    @observable author ='';
-    @observable book ='';
-    @observable status ='';
+@inject('rootStore')
+@observer
+class NewBook extends React.Component {
+    store = this.props.rootStore.newBookViewStore;
+    root = this.props.rootStore;
     render() {
         return (
-            <div className="inputs">
+            <div className='inputs'>
                  <h1>Add Book Form</h1>
-             <input placeholder="Author Name*" type="text" value={this.author} onChange={this.handleInputChange}/>
-             <input placeholder="Book Name*" type="text" value={this.book} onChange={this.handleInputChange}/>
-             <select value={this.status} onChange={this.handleInputChange}>
+             <input placeholder="Author Name*" type="text" value={this.store.author} onChange={this.store.handleInputChange1}/>
+             <input placeholder="Book Name*" type="text" value={this.store.title} onChange={this.store.handleInputChange2}/>
+             <select value={this.store.status} onChange={this.store.handleInputChange3}>
                  <option hidden>Choose reading status*</option>
                  <option value={"completed"}>Completed</option>
                  <option value={"to-read"}>To-Read</option>
                 </select>
-               {/*<button onClick={addBook( id,store.author,store.book,store.status)}>Submit</button>*/}
+               <button disabled={this.store.author === '' || this.store.title === ''||this.store.status === ''}
+                       onClick={() =>this.store.addBook( this.store.getID,this.store.author,this.store.title,this.store.status)} >
+                   Submit
+               </button>
              </div>
         );
     }

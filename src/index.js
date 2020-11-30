@@ -2,13 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import {TableProvider} from "./stores/TableContext";
+import {RootStore} from "./stores/RootStore";
+import {Provider} from "mobx-react";
 
 ReactDOM.render(
   <React.StrictMode>
-      <TableProvider>
+      <Provider rootStore = {new RootStore()}>
           <App />
-      </TableProvider>
+      </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
