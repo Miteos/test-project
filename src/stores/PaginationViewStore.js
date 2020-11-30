@@ -11,14 +11,16 @@ export class PaginationViewStore {
     active = 1;
     pageNumbers = [];
 
-    @computed get getData(){
-        return console.log(this.rootStore.tableStore.data.length)
+    @computed get getPaginated() {
+        for (let i = 1; i <= Math.ceil(this.props.totalItems / this.store.itemsPerPage); i++) {
+            this.pageNumbers.push(i);
+        }
+        return console.log(this.pageNumbers)
     }
-    // @autorun(() =>{
-    //     for (let i = 1; i <= Math.ceil(this.rootStore.tableStore.data.length / this.itemsPerPage); i++) {
-    //         this.pageNumbers.push(i);
-    //     }
-    // })
+
+    @computed getData(){
+        return this.rootStore.data.length
+    }
 
     @action paginate(number){
         this.current = number;
@@ -26,7 +28,7 @@ export class PaginationViewStore {
         console.log(number)
     };
     @computed get paginated(){
-        const indexLastBook = this.current*this.itemsPerPage;
+        const indexLastBook = this.current* this.itemsPerPage;
         const indexFirstBook = indexLastBook - this.itemsPerPage;
         return  this.rootStore.tableStore.data.slice( indexFirstBook,indexLastBook);
     };
