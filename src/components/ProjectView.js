@@ -10,12 +10,16 @@ import BookFilters from "./BookFilters";
 @observer
 class ProjectView extends React.Component{
     store = this.props.rootStore;
+    handleChangePage = page => {
+        this.store.paginationViewStore.paginate(page);
+    };
     render() {
         return(
             <div >
                 <Pagination itemsPerPage={this.store.paginationViewStore.itemsPerPage}
+                            currentPage={this.store.paginationViewStore.current}
                             totalItems={this.store.tableStore.data.length}
-                            paginate={this.store.paginationViewStore.paginate}
+                            paginate={this.store.projectViewStore.handleChangePage}
                             active={this.store.paginationViewStore.current}/>
                 <DataTable />
                 <BookFilters/>

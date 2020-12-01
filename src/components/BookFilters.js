@@ -10,7 +10,7 @@ class BookFilters extends React.Component{
             <div className='inputs'>
             <select value={this.store.input} onChange={this.store.onChange}>
                 {this.store.optionsArray.map((options,i) =>(
-                    <option key={i} value={options}>{options}</option>
+                    <option key={i} id={options} value={options}>{options}</option>
                 ))}
             </select>
             <button>Filter</button>

@@ -10,7 +10,7 @@ export class FilterViewStore {
     @observable optionsArray = ['all','completed','to-read'];
 
     @action onChange = (e) => {
-            this.input = e.target.value;
+        this.input = e.target.value;
         console.log(this.input)
     };
 }
