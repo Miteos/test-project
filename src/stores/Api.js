@@ -1,13 +1,9 @@
-import {makeAutoObservable} from "mobx";
-
 const apiUrl = "https://the-one-api.dev/v2/";
 
 // Access token: 67j2OBO0grj8H6UdznqQ
 
 export class Api {
-    constructor(rootStore) {
-        makeAutoObservable(this)
-    }
+
 
     get = async (urlParams) => {
         const apiKey = 'Bearer 67j2OBO0grj8H6UdznqQ'

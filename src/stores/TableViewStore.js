@@ -1,11 +1,8 @@
-import {action, computed, makeObservable, observable, runInAction} from "mobx";
+import {action, makeObservable, observable, runInAction} from "mobx";
 import {Api} from "./Api";
 
 export class TableViewStore {
 
-    // @action  handleChangePage = value => {
-    //     this.rootStore.paginationViewStore.paginate(value);
-    // };
     constructor() {
         this.api = new Api();
         makeObservable(this, {
@@ -44,7 +41,7 @@ export class TableViewStore {
            try {
                 let params = {
                     sort : this.sort,
-                     page: this.page,
+                    page: this.page,
                     limit: this.limit,
                     race : this.race,
                     gender:this.gender,
@@ -111,10 +108,6 @@ export class TableViewStore {
         this.page = 1;
         this.getData()
     };
-@action getUnique=()=>{
-        let unique = new Set(this.apiData.map(x => x.race))
-        return console.log(unique)
-}
 }
 
 

@@ -1,7 +1,7 @@
 // import React,{useEffect} from 'react'
 // import {Observer} from "mobx-react";
 //
-// const SelectInputView = (value, items, handler, select) => {
+// const SelectInput = (value, items, handler, select) => {
 //     const store = select;
 //     const onChange = e => {
 //         value = e.target.value;
@@ -20,14 +20,13 @@
 //         }</Observer>
 //     )
 // };
-// export default SelectInputView
+// export default SelectInput
 
 import React from 'react'
 import {observer} from "mobx-react";
 
-
 @observer
-class SelectInputView extends React.Component{
+class SelectInput extends React.Component{
     render() {
         return (
             <div className="flex-column">
@@ -42,4 +41,4 @@ class SelectInputView extends React.Component{
     }
 }
 
-export default SelectInputView
+export default SelectInput

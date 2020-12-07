@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import {Observer} from 'mobx-react'
-import SearchView from "./SearchView";
-import SelectInputView from "./inputs/SelectInputView";
+import SearchInput from "./inputs/SearchInput";
+import SelectInput from "./inputs/SelectInput";
 import PaginationView from "./PaginationView";
 import Spinner from "./animations/Spinner";
 
@@ -15,30 +15,29 @@ const TableView = ({data}) => {
 
     useEffect(() => {
            store.getData();
-           store.getUnique()
         }, [store]);
 
          return(
              <Observer>{()=>
                  <div className="container">
                      <div className="filters-table">
-                         <SearchView
+                         <SearchInput
                              label={'Search by name'}
                              handler={store.handleSearch}
                          />
-                         <SelectInputView
+                         <SelectInput
                              label={'Filter by race'}
                              value = {store.race}
                              items={raceArray}
                              handler ={store.handleFilterRace}
                          />
-                         <SelectInputView
+                         <SelectInput
                              label={'Filter by gender'}
                              value = {store.gender}
                              items={genderArray}
                              handler ={store.handleFilterGender}
                          />
-                         <SelectInputView
+                         <SelectInput
                              label={'Sort table'}
                              value = {store.sorted}
                              items={sortArray}
