@@ -56,6 +56,9 @@ const TableView = ({data}) => {
                              {/*<th></th>*/}
                          </tr>
                          </thead>
+                         {data.apiData.length ===0 ?  <tr>
+                             <td colSpan="5">By the Shire! No one goes by that name! Try again ...</td>
+                         </tr>:null}
                          <tbody>
                          {data.apiData.map((b, i) => (
                              <tr key={i}>
