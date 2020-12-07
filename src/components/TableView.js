@@ -28,19 +28,19 @@ const TableView = ({data}) => {
                          <SelectInput
                              label={'Filter by race'}
                              value = {store.race}
-                             items={raceArray}
+                             items={store.raceArray}
                              handler ={store.handleFilterRace}
                          />
                          <SelectInput
                              label={'Filter by gender'}
                              value = {store.gender}
-                             items={genderArray}
+                             items={store.genderArray}
                              handler ={store.handleFilterGender}
                          />
                          <SelectInput
                              label={'Sort table'}
                              value = {store.sorted}
-                             items={sortArray}
+                             items={store.sortArray}
                              handler ={store.handleSort}
                          />
                          <button onClick={store.resetFilters}>Reset Filters</button>

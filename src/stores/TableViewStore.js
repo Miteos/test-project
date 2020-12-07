@@ -22,7 +22,9 @@ export class TableViewStore {
 
         });
     }
-
+    raceArray =['All','Human','Dwarf','Elf','Maiar','Dragons'];
+    genderArray =['All','Female','Male'];
+    sortArray = ['Ascending','Descending'];
     apiData = [];
     status = 'test';
     search = '';
