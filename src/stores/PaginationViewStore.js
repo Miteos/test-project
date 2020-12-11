@@ -1,4 +1,4 @@
-import {action, computed, makeAutoObservable} from "mobx";
+import {makeAutoObservable} from "mobx";
 import {TableViewStore} from "./TableViewStore";
 
 export class PaginationViewStore {

@@ -37,7 +37,7 @@ const PaginationView = ({handler,currentPage,lastPage }) => {
                                     onClick={onClick}
                                     key={v.toString()}
                                 >
-                                    <a className="page-link" href="">{v}</a>
+                                    <span className="page-link">{v}</span>
 
                                 </li>
                             );
@@ -50,36 +50,5 @@ const PaginationView = ({handler,currentPage,lastPage }) => {
         )
 };
 
-// import React from 'react';
-// import {inject, observer} from "mobx-react";
-// import {computed} from "mobx";
-//
-// @inject('rootStore')
-// @observer
-// class PaginationView extends React.Component {
-//     store = this.props.rootStore.paginationViewStore;
-//
-//     pageNumbers=[];
-//     render (){
-//         this.store.itemsPerPage = this.props.itemsPerPage;
-//
-//            for (let i = 1; i <= Math.ceil(this.props.totalItems / this.store.itemsPerPage); i++) {
-//                this.pageNumbers.push(i);
-//            }
-//         return (
-//             <div>
-//                 <ul className='pagination'>
-//                     {this.store.pageNumbers.map((number,i) => (
-//                         <li key={i} >
-//                         <span onClick={()=>this.store.paginate(number)} className={this.store.active === number ? 'active':''}>
-//                             {number}
-//                         </span>
-//                         </li>
-//                     ))}
-//                 </ul>
-//             </div>
-//         )
-//     }
-// }
 
 export default PaginationView;

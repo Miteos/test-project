@@ -10,7 +10,7 @@ const SearchInput = ({ handler,label})=>{
     return(
         <div className="flex-column">
             <span>{label}</span>
-            <input type="search"  placeholder="Search..." onKeyPress={onKeyPress}/>
+            <input type="search"  placeholder="Search..." onChange={onKeyPress}/>
         </div>
         )
 }

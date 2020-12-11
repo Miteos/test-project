@@ -1,114 +1,164 @@
 import {action, makeObservable, observable, runInAction} from "mobx";
 import {Api} from "./Api";
 
-export class TableViewStore {
 
-    constructor() {
+export class TableViewStore {
+    @observable books =[];
+    constructor(rootStore) {
+        this.rootStore = rootStore;
         this.api = new Api();
         makeObservable(this, {
             apiData :observable,
             search:observable,
             page : observable,
-            race :observable,
-            gender:observable,
             limit:observable,
             sort:observable,
             lastPage :observable,
             status: observable,
             loading:observable,
-            getData: action,
-            handleSearch:action,
+            filter:action,
+            getData:action,
+            doSort:action,
+            resetFilters:action,
+            handleSort:action,
+            // handleSearch:action,
+            handleFilterStatus:action,
             handlePagination:action
 
         });
     }
-    raceArray =['All','Human','Dwarf','Elf','Maiar','Dragons'];
-    genderArray =['All','Female','Male'];
-    sortArray = ['Ascending','Descending'];
+    statusArray =['All','Completed', 'To-Read'];
+    sortArray = ['Unsorted','Ascending','Descending'];
     apiData = [];
-    status = 'test';
+    status = '';
     search = '';
-    race = '';
-    gender = '';
     sort = '';
     sorted = '';
     lastPage = '';
+    error = '';
     page = 1;
     limit = 30;
-    loading = 'true';
-
+    loading = true;
 
     getData = async () => {
         this.loading = true;
            try {
-                let params = {
-                    sort : this.sort,
-                    page: this.page,
-                    limit: this.limit,
-                    race : this.race,
-                    gender:this.gender,
-                    name: this.search.charAt(0).toUpperCase() + this.search.slice(1)
-                };
-                const urlParams = new URLSearchParams(Object.entries(params));
-                const data = await this.api.get(urlParams);
-                runInAction(() => {
-                    this.lastPage = data.pages;
-                    this.apiData = data.docs;
+               const data = await this.api.get();
+               if(data ===null)
+                   runInAction(() => {
+                   // this.lastPage = data.pages;
+                   this.apiData = [];
+                   this.loading = false
+
+               });
+               const toArray = Object.keys(data).map(i => data[i]);
+               runInAction(() => {
+                    // this.lastPage = data.pages;
+                    this.apiData = toArray;
                     this.loading = false
                    });
             } catch (error) {
                 runInAction(() => {
-                    this.status = "error";
-                });
-            }
+                    this.error = "error";
+                })
+            }finally {
+
+           }
         };
 
+    deleteBook = async (id) => {
+        try {
+            this.loading = true;
+            const getNode = await this.api.getFilter(`?&orderBy="id"&equalTo="${id}"`);
+            const forUrl  =Object.keys(getNode)[0];
+            const response = await this.api.delete(forUrl);
+            if (response.status === 204) {
+                runInAction(() => {
+                    this.loading = false
+                })
+            }
+        } catch (error) {
+            runInAction(() => {
+                this.error="error";
+            })
+        }finally {
+            this.getData()
+        }
+    };
 
 
-    handleSearch =(value)=>{
-       this.search = value;
-       this.getData()
+    // handleSearch =(value)=>{
+    //    this.search = value;
+    //       this.apiData = this.apiData.filter(el => el.author === this.search);
+    //     if (this.search === '')
+    //         this.resetFilters()
+    // };
+   async filter (){
+       try{
+           await this.getData()
+           runInAction(() => {
+               this.sorted ='Unsorted'
+           })
+       }catch (e) {
+           this.error = 'error'
+       } finally{
+           if(this.status === 'All'){
+               this.getData()
+           }
+           runInAction(() => {
+               this.apiData = this.apiData.filter(el => el.status === this.status)
+           })
+
+       }
+
+    }
+    handleFilterStatus = (e) => {
+        this.status = e.target.value;
+        this.filter()
     };
-    handleFilterRace = (e) => {
-        this.race = e.target.value;
-        if(this.race === 'All'){
-            this.race = ''
-        }
-        console.log(this.race);
-        this.getData()
-    };
-    handleFilterGender = (e) => {
-        this.gender = e.target.value;
-        if(this.gender === 'All'){
-            this.gender = ''
-        }
-        console.log(this.gender);
-        this.getData()
-    };
+   async doSort (){
+       this.loading =true;
+       try{
+          await this.getData()
+       }catch (e) {
+           this.error= 'error'
+       }finally {
+           if (this.sorted === 'Unsorted'){
+              this.resetFilters();
+               runInAction(() => {
+                   this.loading =false
+               })
+           }
+           if (this.sorted === 'Ascending'){
+               runInAction(() => {
+                   this.apiData = this.apiData.sort((a, b) => b.author.localeCompare(a.author))
+                   this.status = 'All'
+                   this.loading =false
+               })
+           }
+           if (this.sorted === 'Descending'){
+               runInAction(() => {
+                   this.apiData = this.apiData.sort((a, b) => a.author.localeCompare(b.author))
+                   this.status = 'All';
+                   this.loading =false
+               })
+           }
+       }
+   }
     handleSort= (e) =>{
         this.sorted = e.target.value;
-        // this.sort = `name:${e.target.value}`.toLowerCase();
-        if (e.target.value === 'Ascending'){
-            this.sort = 'name:asc'
-        }
-        if (e.target.value === 'Descending'){
-            this.sort = 'name:desc'
-        }
-        console.log(this.sort);
-        this.getData()
+        this.doSort();
+
     };
     handlePagination = value =>{
         this.page = value;
         this.getData()
     };
     resetFilters = () =>{
-        this.search = '';
-        this.race = '';
-        this.gender = '';
-        this.sort = '';
-        this.sorted = '';
-        this.page = 1;
-        this.getData()
+        this.getData();
+        // this.search = '';
+        this.status = 'All';
+        this.sorted = 'Unsorted'
     };
 }
 

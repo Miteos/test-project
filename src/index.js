@@ -1,13 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {Provider} from "mobx-react";
 import './index.css';
 import './fonts/RINGM___.TTF';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {RootStore} from "./stores/RootStore";
+import { BrowserRouter } from 'react-router-dom';
+
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+      <Provider rootStore = {new RootStore()}>
+          <BrowserRouter>
+              <App />
+          </BrowserRouter>
+      </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
