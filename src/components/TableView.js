@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react'
 import {Observer} from 'mobx-react'
-// import Pagination from "./Pagination";
 import Spinner from "./animations/Spinner";
 import Table from "./Table";
 import TableFilters from "./TableFilters";

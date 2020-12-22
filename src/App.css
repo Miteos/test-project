@@ -181,7 +181,8 @@ input[type=submit]:hover {
 .container{
   display: flex;
   flex-direction: column;
-  place-content: center;
+  justify-content: center;
+  align-items: center;
   min-width: 400px;
   margin: 10px 25px;
 }
@@ -238,7 +239,7 @@ input[type=submit]:hover {
   background-size: 200% 100%;
   outline: none;
   height: 43px;
-  max-width: 100px;
+  max-width: 150px;
   margin-top: 24px;
 }
 .green-button:hover{
@@ -247,6 +248,9 @@ input[type=submit]:hover {
   text-decoration: none;
   -webkit-box-shadow: 0 5px 12px 4px rgba(0, 0, 0, 0.25);
   box-shadow: 0 5px 12px 4px rgba(0, 0, 0, 0.25);
+}
+.green-button a {
+  color: white;
 }
 .container a {
   text-decoration: none;
@@ -289,7 +293,26 @@ input[type=submit]:hover {
 .form-width{
   width: 80%;
 }
-
+textarea{
+  width: 100%;
+  height: 100%;
+}
+textarea:focus{
+  -webkit-box-shadow: 0 5px 12px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 5px 12px 4px rgba(0, 0, 0, 0.25);
+  transition: 0.2s ease-in;
+  outline: none;
+}
+.form-width textarea {
+  width: 100%;
+  height: 100%;
+  padding:10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  transition: 0.2s ease-out;
+  min-height: 200px;
+}
 .row-buttons{
   display: flex;
   flex-direction: row;
@@ -508,4 +531,35 @@ input[type=submit]:hover {
 }
 form{
   height: 100%;
+}
+.box{
+  margin: 20px 0 20px 0;
+  color: white;
+  border-radius: 10px;
+  background: #009879;
+  cursor: pointer;
+  outline: none;
+  width: min-content;
+  transition: 0.2s ease-out;
+}
+.box:hover{
+  cursor: pointer;
+  -webkit-box-shadow: 0 5px 12px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 5px 12px 4px rgba(0, 0, 0, 0.25);
+  transition: 0.2s ease-in;
+}
+.list-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border:thin solid #ccc;
+  background-color:#ccc ;
+  padding:10px;
+  border-radius: 10px;
+  color: black;
+  margin-bottom: 5px;
+}
+.margin-0{
+  margin: 0!important;
 }

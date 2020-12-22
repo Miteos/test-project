@@ -5,10 +5,11 @@ import AddBookDescriptionForm from "../AddBookDescriptionForm";
 import AddBookForm from "../AddBookForm";
 import AddBookReviewForm from "../AddBookReviewForm";
 import {Observer} from "mobx-react";
+import AddLibraryForm from "../AddLibraryForm";
 
 const editIcon = <FontAwesomeIcon icon={faEdit} size={"sm"} />;
 
-const Card= ({title, position,details,description,review, opener,openState,revForm,detForm,descForm,store}) => {
+const Card= ({title, position,details,description,review, opener,openState,revForm,detForm,descForm,store,library,detLibraryForm}) => {
     return(
         <Observer>{() =>
             <div className={"item-" + position}>
@@ -47,6 +48,15 @@ const Card= ({title, position,details,description,review, opener,openState,revFo
                                 : null}
                             {details === true && openState ?
                                 <div className="textarea"><AddBookForm form={detForm}/></div> : null}
+                            {library === true && !openState ?
+                                <div className="card-details">
+                                    <p>Library: {store.model.library}</p>
+                                    <p>Genre : {store.model.genre}</p>
+                                    <p>Description : {store.model.description}</p>
+                                </div>
+                                : null}
+                            {library === true && openState ?
+                                <div className="textarea"><AddLibraryForm form={detLibraryForm}/></div> : null}
                         </div>
                     </div>
                 </div>

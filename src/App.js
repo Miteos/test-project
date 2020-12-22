@@ -5,6 +5,9 @@ import EditBook from "./pages/EditBook";
 import AddBook from "./pages/AddBook";
 import BookDetails from "./pages/BookDetails";
 import Home from "./pages/Home";
+import Libraries from "./pages/Libraries";
+import AddLibrary from "./pages/AddLibrary";
+import LibraryDetails from "./pages/LibraryDetails";
 
 function App() {
   return (
@@ -15,6 +18,9 @@ function App() {
                 <Route path="/add-book" component={AddBook}/>
                 <Route path="/edit-book/:id" component ={EditBook}/>
                 <Route path="/book-details/:id" component ={BookDetails}/>
+                <Route path="/libraries" component ={Libraries}/>
+                <Route path="/library-details/:id"  component ={LibraryDetails}/>
+                <Route path="/add-library" component ={AddLibrary}/>
             </Switch>
         </div>
       </Router>
