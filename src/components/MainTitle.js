@@ -1,8 +1,15 @@
 import React from 'react'
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faHome} from "@fortawesome/free-solid-svg-icons";
+import {Link} from "react-router-dom";
 
-export const MainTitle = ({title}) =>{
+export const MainTitle = ({title, withLink}) =>{
+    const home = <FontAwesomeIcon icon={faHome} size={"sm"} />;
     return(
-        <h1 className='styled-title'>{title}</h1>
+        <div className="flex-row">
+            <h1 className='styled-title'>{title}</h1>
+            {withLink === true ?<Link to="/"><button className="icon-button">{home}</button></Link>:null}
+        </div>
         )
-
 }
+

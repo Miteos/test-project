@@ -1,8 +1,7 @@
 const apiUrl = "https://test-project-ea9e5-default-rtdb.europe-west1.firebasedatabase.app/books";
-const apiKey = 'AIzaSyDYBn0OV0tmOWR_JECS9gwF5C_IKtbNUxo';
-// Access token: 67j2OBO0grj8H6UdznqQ
+const apiKey = process.env.REACT_APP_LIBRARY_API_KEY;
 
-export class Api {
+export class BookService {
 
     get = async () => {
         let options = {
@@ -18,7 +17,7 @@ export class Api {
         return await response.json();
     };
 
-        getFilter = async (urlParams) => {
+        find = async (urlParams) => {
             let options = {
                 method: "GET",
                 headers : {
@@ -45,11 +44,11 @@ export class Api {
         const response = await fetch(request);
         return response;
     };
-    put = async (model,urlParams) => {
+    patch = async (model, urlParams) => {
         const headers = new Headers();
         headers.append("Content-Type", "application/json");
         let options = {
-            method: "PUT",
+            method: "PATCH",
             headers,
             body: JSON.stringify(model)
         };

@@ -3,13 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.32",
+    "@fortawesome/free-solid-svg-icons": "^5.15.1",
+    "@fortawesome/react-fontawesome": "^0.1.13",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",
     "@testing-library/user-event": "^12.5.0",
     "customize-cra": "^1.0.0",
     "firebase": "^8.1.2",
-    "mobx": "^6.0.4",
-    "mobx-react": "^7.0.5",
+    "mobx": "5.15.4",
+    "mobx-react": "5.4.4",
+    "mobx-react-form": "2.0.8",
+    "mobx-react-form-devtools": "1.11.1",
     "nanoid": "^2.1.11",
     "react": "^17.0.1",
     "react-app-rewired": "^2.1.7",
@@ -17,6 +22,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "react-uuid": "^1.0.2",
+    "validatorjs": "^3.22.1",
     "web-vitals": "^0.2.4"
   },
   "scripts": {

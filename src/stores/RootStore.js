@@ -1,12 +1,13 @@
 import {TableViewStore} from "./TableViewStore";
-import {PaginationViewStore} from "./PaginationViewStore";
 import {NewBookViewStore} from "./NewBookViewStore";
+import {BookDetailsViewStore} from "./BookDetailsViewStore";
+
 
 export class RootStore{
     constructor() {
         this.tableStore = new TableViewStore(this);
-        this.paginationStore = new PaginationViewStore(this);
-        this.newBookStore = new NewBookViewStore(this)
+        this.newBookStore = new NewBookViewStore(this);
+        this.bookDetailsStore = new BookDetailsViewStore(this)
     }
 }
 

@@ -51,6 +51,8 @@ body {
   font-family: Lotr, sans-serif;
   padding : 20px;
   letter-spacing: 0.1em;
+  text-align: center;
+  width: 100%;
 }
 .styled-table thead tr {
   background-color: #009879;
@@ -102,9 +104,25 @@ body {
   cursor: pointer;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
+.clickable{
+  padding: 0 !important;
+}
 .clickable a{
+  padding: 12px 15px;
   width: 100%;
   height: 100%;
+}
+.flex-row{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 0 100px 0 100px
+}
+.flex-row button {
+}
+label{
+  display: block;
 }
 input[type=text] {
   padding: 12px 20px;
@@ -126,6 +144,7 @@ input[type=text]:focus{
 input[type=search],select{
   padding: 12px 20px;
   height: 43px;
+  width: 100%;
   margin: 4px 0 8px 0;
   display: inline-block;
   border: 1px solid #ccc;
@@ -174,7 +193,7 @@ input[type=submit]:hover {
   letter-spacing: 0.015em;
   text-decoration: none;
   display: flex;
-  width: 100%;
+  width: 100% !important;
   border: 0;
   border-radius:5px ;
   line-height: 34px;
@@ -193,6 +212,41 @@ input[type=submit]:hover {
   outline: none;
   height: 43px;
   margin-top: 24px;
+}
+.green-button{
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  list-style: none;
+  letter-spacing: 0.015em;
+  text-decoration: none;
+  display: flex;
+  width: 100% !important;
+  border: 0;
+  border-radius:5px ;
+  line-height: 34px;
+  text-shadow: 0 0 1px #bbb;
+  background-image: linear-gradient(to left, #45a049, #009879, #009879);
+  box-shadow: 0 5px 12px 4px rgba(0, 0, 0, 0.15);
+  justify-content: center;
+  text-indent: 0;
+  color: white !important;
+  font-weight: 400;
+  font-size: 14px;
+  padding: 4.5px 30px;
+  position: relative;
+  transition: all 0.2s ease-in-out;
+  background-size: 200% 100%;
+  outline: none;
+  height: 43px;
+  max-width: 100px;
+  margin-top: 24px;
+}
+.green-button:hover{
+  background-position: 100% 0;
+  cursor: pointer;
+  text-decoration: none;
+  -webkit-box-shadow: 0 5px 12px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 5px 12px 4px rgba(0, 0, 0, 0.25);
 }
 .container a {
   text-decoration: none;
@@ -213,16 +267,20 @@ input[type=submit]:hover {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  max-width: 500px;
+  min-width: 600px;
   margin:20px;
   color: white;
-  min-height: 500px;
+  min-height: 808px;
   border: thin solid #009879 ;
   border-radius:5px ;
   background-color: #009879;
 }
+.input-spacing{
+  margin-bottom: 10px;
+}
 .form-container button input[type=submit]{
   background-image: linear-gradient(to left, #fc6076, #ff8b1a, #ff5c44) !important;
+  margin: 0 !important;
 }
 .form-container input span{
   margin:20px;
@@ -235,17 +293,32 @@ input[type=submit]:hover {
 .row-buttons{
   display: flex;
   flex-direction: row;
+  justify-content: flex-end;
   text-decoration: none;
 }
 .row-buttons a {
-  text-decoration: none;
+  text-decoration: none !important;
+  color: white;
+  width: 100%;
+  height: 100%;
 }
 .row-buttons button:first-child{
   margin-right: 10px;
+  width: 70%;
+  margin-top:0 ;
+  padding: 4.5px 0;
 }
 .row-buttons button:last-child{
   background-image: linear-gradient(to left, red, red, #ff5c44) !important;
-  box-shadow: none;
+  width: 30%;
+  padding: 4.5px 0;
+  margin: 0;
+  color: white;
+
+}
+.row-buttons button:last-child:hover {
+  -webkit-box-shadow: 0 5px 12px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 5px 12px 4px rgba(0, 0, 0, 0.25);
 }
 .container-centered{
   height: 100vh;
@@ -299,10 +372,11 @@ input[type=submit]:hover {
 .pagination {
   display: flex;
   list-style: none;
+  justify-content: center;
   padding: 0;
   margin: 20px 20px;
 }
-.pagination li{
+.pagination span{
   cursor: pointer;
   color: black;
   padding: 5px 10px;
@@ -315,17 +389,123 @@ input[type=submit]:hover {
 }
 .pagination span {
   text-decoration: none;
-  color: black;
 }
 .pagination .active{
   background-color: #009879;
 }
-.pagination .active span {
-  color:  #f3f3f3;
+.active{
+  color: #f3f3f3 !important;
 }
-.pagination li:hover{
+.pagination span:hover{
   transition: 0.2s ease-out;
   -webkit-box-shadow: 0 5px 12px 4px rgba(0, 0, 0, 0.25);
   box-shadow: 0 5px 12px 4px rgba(0, 0, 0, 0.25);
 }
+.grid-oontainer{
+  display: grid;
+  grid-template-columns: 1fr 3fr ;
+  grid-gap: 30px;
+  grid-template-rows: auto;
+  grid-template-areas: "sidebar main" "sidebar main";
+  margin:0 100px 0 100px;
+}
+.item-1{
+  grid-area: sidebar;
+  width: 100%;
+  justify-self: end;
 
+}
+.item-2 .item-3{
+  grid-area: main;
+  justify-self: center !important;
+  width: 100%;
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-width: 400px;
+}
+.card-header{
+  display: flex;
+  border: thin solid #ccc;
+  border-top-left-radius:20px ;
+  border-top-right-radius:20px ;
+  background-color:  #009879;
+  justify-content: space-between;
+  align-items: center;
+}
+.card-header h2{
+  padding :25px 20px;
+  color: white;
+}
+
+.card-content{
+  border: thin solid #ccc;
+  border-top: none;
+  border-bottom-left-radius:10px ;
+  border-bottom-right-radius:10px ;
+  height: 100%;
+}
+.icon-button{
+  margin-right: 20px;
+  display:block;
+  width:40px;
+  height:40px;
+  border: 2px solid #f5f5f5;
+  border-radius: 50%;
+  color:#f5f5f5;
+  text-align:center;
+  text-decoration:none;
+  background: #555777;
+  box-shadow: 0 0 3px gray;
+  font-size:20px;
+  font-weight:bold;
+  outline: none;
+  transition: 0.2s ease-out;
+}
+.icon-button:hover {
+  background: #009879;
+  cursor: pointer;
+  -webkit-box-shadow: 0 5px 12px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 5px 12px 4px rgba(0, 0, 0, 0.25);
+  transition: 0.2s ease-in;
+}
+.textarea{
+  width: 100%;
+  height: 100%;
+}
+.textarea textarea {
+  width: 100%;
+  height: 100%;
+  padding:10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  transition: 0.2s ease-out;
+  min-height: 200px;
+}
+.textarea textarea:focus{
+  -webkit-box-shadow: 0 5px 12px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 5px 12px 4px rgba(0, 0, 0, 0.25);
+  transition: 0.2s ease-in;
+  outline: none;
+}
+.card-inner{
+  padding:20px;
+  height: 100%;
+}
+.card-details p{
+  padding:30px 20px;
+  border-bottom: thin solid #ccc;;
+}
+.card-details p:first-child{
+  padding:25px 20px;
+  border-bottom: thin solid #ccc;;
+}
+.card-details p:last-child{
+  border-bottom: none;
+}
+form{
+  height: 100%;
+}

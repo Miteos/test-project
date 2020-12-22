@@ -1,75 +1,73 @@
-import {action, makeObservable, observable, runInAction} from "mobx";
-import {Api} from "./Api";
+import {action, autorun, computed, observable, runInAction, set} from "mobx";
+import {BookService} from "../components/services/BookService";
 
 
 export class TableViewStore {
     @observable books =[];
     constructor(rootStore) {
         this.rootStore = rootStore;
-        this.api = new Api();
-        makeObservable(this, {
-            apiData :observable,
-            search:observable,
-            page : observable,
-            limit:observable,
-            sort:observable,
-            lastPage :observable,
-            status: observable,
-            loading:observable,
-            filter:action,
-            getData:action,
-            doSort:action,
-            resetFilters:action,
-            handleSort:action,
-            // handleSearch:action,
-            handleFilterStatus:action,
-            handlePagination:action
+        this.api = new BookService();
 
-        });
     }
-    statusArray =['All','Completed', 'To-Read'];
-    sortArray = ['Unsorted','Ascending','Descending'];
-    apiData = [];
-    status = '';
-    search = '';
-    sort = '';
-    sorted = '';
-    lastPage = '';
-    error = '';
-    page = 1;
-    limit = 30;
-    loading = true;
+   @observable   statusArray =['All','Completed', 'To-Read'];
+    @observable  sortArray = ['Unsorted','Ascending','Descending'];
+    @observable  apiData = [];
+    @observable  status = 'All';
+    @observable  search = '';
+    @observable  sort = '';
+    @observable  filteredList = [];
+    @observable  sorted = 'Unsorted';
+    @observable  itemsPerPage = 5;
+    @observable  lastPage = '';
+    @observable  error = '';
+    @observable  page = 1;
+    @observable  limit = 30;
+    @observable  loading = true;
 
-    getData = async () => {
+
+  @action  getData = async () => {
         this.loading = true;
            try {
-               const data = await this.api.get();
-               if(data ===null)
+               if (this.status==='All' && this.sorted === 'Unsorted'){
+                   const data = await this.api.get();
+                   const toArray = Object.keys(data).map(i => data[i]);
                    runInAction(() => {
-                   // this.lastPage = data.pages;
-                   this.apiData = [];
-                   this.loading = false
-
-               });
-               const toArray = Object.keys(data).map(i => data[i]);
-               runInAction(() => {
-                    // this.lastPage = data.pages;
-                    this.apiData = toArray;
-                    this.loading = false
+                       this.apiData = toArray;
                    });
+               }  if (this.status === 'Completed' || this.status ==='To-Read') {
+                   const data = await this.api.find(`?&orderBy="status"&equalTo="${this.status}"`);
+                   const toArray = Object.keys(data).map(i => data[i]);
+                   runInAction(() => {
+                       this.apiData = toArray;
+                   });
+               } else if(this.sorted !== 'Unsorted' && this.status==='All'){
+                   const data = await this.api.find(`?&orderBy="author"`);
+                   const toArray = Object.keys(data).map(i => data[i]);
+                   const desc = toArray.slice().sort((a, b) => a.author.localeCompare(b.author));
+                   const asc =  toArray.slice().sort((a, b) => b.author.localeCompare(a.author));
+                   if (this.sorted === 'Ascending'){
+                       runInAction(() => {
+                           this.apiData = asc;
+                       });
+                   }else  this.apiData = desc
+               }
             } catch (error) {
                 runInAction(() => {
                     this.error = "error";
                 })
             }finally {
-
+               runInAction(() => {
+                   this.paginate();
+                   this.loading = false
+               });
            }
         };
 
-    deleteBook = async (id) => {
+
+   @action deleteBook = async (id) => {
         try {
             this.loading = true;
-            const getNode = await this.api.getFilter(`?&orderBy="id"&equalTo="${id}"`);
+            const getNode = await this.api.find(`?&orderBy="id"&equalTo="${id}"`);
             const forUrl  =Object.keys(getNode)[0];
             const response = await this.api.delete(forUrl);
             if (response.status === 204) {
@@ -86,80 +84,84 @@ export class TableViewStore {
         }
     };
 
-
-    // handleSearch =(value)=>{
-    //    this.search = value;
-    //       this.apiData = this.apiData.filter(el => el.author === this.search);
-    //     if (this.search === '')
-    //         this.resetFilters()
-    // };
-   async filter (){
+  @action async filter (){
        try{
-           await this.getData()
-           runInAction(() => {
-               this.sorted ='Unsorted'
-           })
+              await runInAction(() => {
+                   this.sorted ='Unsorted';
+                   // this.filteredList = this.apiData.filter(el => el.status === this.status)
+                   console.log(this.filteredList)
+               })
        }catch (e) {
            this.error = 'error'
-       } finally{
-           if(this.status === 'All'){
-               this.getData()
-           }
-           runInAction(() => {
-               this.apiData = this.apiData.filter(el => el.status === this.status)
-           })
-
        }
 
     }
-    handleFilterStatus = (e) => {
+
+  @action  handleFilterStatus = (e) => {
         this.status = e.target.value;
         this.filter()
+        this.getData()
+        // this.filter()
     };
-   async doSort (){
-       this.loading =true;
-       try{
-          await this.getData()
+  @action async doSort () {
+      this.loading = true;
+      try {
+          if (this.sorted === 'Unsorted') {
+              this.resetFilters();
+              runInAction(() => {
+                  this.loading = false
+              })
+          }
+          if (this.sorted === 'Ascending') {
+              runInAction(() => {
+                  // this.filteredList = this.apiData.slice().sort((a, b) => b.author.localeCompare(a.author))
+                  this.status = 'All'
+                  this.loading = false
+              })
+          }
+          if (this.sorted === 'Descending') {
+              runInAction(() => {
+                  // this.filteredList = this.apiData.slice().sort((a, b) => a.author.localeCompare(b.author))
+                  this.status = 'All';
+                  this.loading = false
+              })
+          }
        }catch (e) {
            this.error= 'error'
-       }finally {
-           if (this.sorted === 'Unsorted'){
-              this.resetFilters();
-               runInAction(() => {
-                   this.loading =false
-               })
-           }
-           if (this.sorted === 'Ascending'){
-               runInAction(() => {
-                   this.apiData = this.apiData.sort((a, b) => b.author.localeCompare(a.author))
-                   this.status = 'All'
-                   this.loading =false
-               })
-           }
-           if (this.sorted === 'Descending'){
-               runInAction(() => {
-                   this.apiData = this.apiData.sort((a, b) => a.author.localeCompare(b.author))
-                   this.status = 'All';
-                   this.loading =false
-               })
-           }
        }
    }
-    handleSort= (e) =>{
+  @action  handleSort= (e) =>{
         this.sorted = e.target.value;
-        this.doSort();
+        this.doSort()
+        this.getData();
 
     };
-    handlePagination = value =>{
-        this.page = value;
-        this.getData()
+  @action  paginate(){
+         runInAction(() => {
+              const indexLastBook = this.page*this.itemsPerPage;
+              const indexFirstBook = indexLastBook - this.itemsPerPage;
+              this.filteredList = this.apiData.slice( indexFirstBook,indexLastBook);
+          })
+      }
+
+
+   @action handlePagination = value =>{
+           this.page = value;
+           this.getData()
+
     };
-    resetFilters = () =>{
+   @action resetFilters = () =>{
         this.getData();
-        // this.search = '';
         this.status = 'All';
         this.sorted = 'Unsorted'
     };
-}
+   // @computed
+   // get paginated(){
+   //         const indexLastBook = this.page*this.itemsPerPage;
+   //         const indexFirstBook = indexLastBook - this.itemsPerPage;
+   //         return  this.apiData.slice( indexFirstBook,indexLastBook);
+   //     }
+   }
+
 
 
