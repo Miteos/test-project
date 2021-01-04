@@ -1,6 +1,5 @@
-import {action, observable, runInAction} from "mobx";
+import {action, observable} from "mobx";
 import {LibraryService} from "../components/services/LibraryService";
-import uuid from "react-uuid";
 import {BookService} from "../components/services/BookService";
 
 export class LibraryViewStore {
@@ -11,9 +10,6 @@ export class LibraryViewStore {
         this.bookApi = new BookService();
     }
     @observable  apiData = [];
-    @observable book = {
-        books:{}
-    };
     @observable  bookData = [];
     @observable loading = true;
     @observable currentLibrary = '';
@@ -34,13 +30,18 @@ export class LibraryViewStore {
         let url = 'libraries/' + this.currentLibrary +'/books';
         try {
             const data = await this.bookApi.get(url);
-            this.bookData = Object.keys(data).map(i => data[i]);
-            const setForRemovingDuplicates = new Set()
-            this.filteredBookData = this.bookData.filter(el =>{
-                const duplicate = setForRemovingDuplicates.has(el.id)
-                setForRemovingDuplicates.add(el.id)
-                return !duplicate
-            });
+            if (data !== null){
+                this.bookData = Object.keys(data).map(i => data[i]);
+                const setForRemovingDuplicates = new Set()
+                this.filteredBookData = this.bookData.filter(el =>{
+                    const duplicate = setForRemovingDuplicates.has(el.id)
+                    setForRemovingDuplicates.add(el.id)
+                    return !duplicate
+                });
+            }else {
+                this.bookData = [];
+                this.filteredBookData =  []
+            }
         } catch (error) {
                 this.error = "error";
         }finally {
@@ -51,7 +52,10 @@ export class LibraryViewStore {
         this.loading = true;
         try {
             const data = await this.api.get();
-            this.apiData = Object.keys(data).map(i => data[i]);
+            if (data !==null){
+                this.apiData = Object.keys(data).map(i => data[i]);
+            }
+            else this.apiData = []
         } catch (error) {
                 this.error = "error";
         }finally {
@@ -69,29 +73,16 @@ export class LibraryViewStore {
             this.model.genre = toArray[0].genre;
             this.model.description = toArray[0].description;
             this.model.id = toArray[0].id;
+            this.model.books = toArray[0].books
             this.currentLibrary = uid[0];
             this.status = "success";
             this.loading = false;
         if (toArray[0].books){
             this.libraryBooks = Object.keys(toArray[0].books).map(i => toArray[0].books[i])
-        }else this.libraryBooks = []
-        } catch (error) {
-            runInAction(() => {
-                this.status = "error";
-            })
         }
-    };
-
-    @action librarySubmit = async (form) => {
-        this.loading = true;
-        try {
-            this.model = form.values();
-            this.model.id = uuid();
-            await this.api.post(this.book);
-            this.status = "success";
-            this.loading = false;
-            alert('Successfully added a library!')
-        } catch (error) {
+        else this.libraryBooks = []
+        }
+        catch (error) {
                 this.status = "error";
         }
     };
@@ -102,11 +93,11 @@ export class LibraryViewStore {
             if (response.status === 200) {
                     this.status = "success";
                     this.loading = false;
+                    alert('Successfully added a book to this library!')
             }
         } catch (error) {
                 this.status = "error";
         }finally {
-            alert('Successfully added a book to this library!')
             this.getBooks()
         }
     };
@@ -115,15 +106,31 @@ export class LibraryViewStore {
         try {
             const getNode = await this.api.findBook(this.currentLibrary,`?&orderBy="id"&equalTo="${id}"`);
             const forUrl = Object.keys(getNode)[0];
-            const response = await this.api.delete(this.currentLibrary,forUrl);
-            if (response.status === 204) {
+            const response = await this.api.deleteBookInLibrary(this.currentLibrary,forUrl);
+            if (response.status === 200) {
                 this.loading = false
-                alert("Success! This book has been deleted from library!")
             }
         } catch (error) {
             this.error = "error";
         } finally {
+            alert("Success! This book has been deleted from library!")
             this.getBooks()
+        }
+    };
+    @action deleteLibrary = async (id) => {
+        this.loading = true;
+        try {
+            const getNode = await this.api.find(`?&orderBy="id"&equalTo="${id}"`);
+            const forUrl = Object.keys(getNode)[0];
+            const response = await this.api.deleteLibrary(forUrl);
+            if (response.status === 200) {
+                this.loading = false
+            }
+        } catch (error) {
+            this.error = "error";
+        } finally {
+            this.getData()
+            alert("Success! This library has been deleted!")
         }
     };
 }

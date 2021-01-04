@@ -22,7 +22,7 @@ const Card= ({title, position,details,description,review, opener,openState,revFo
                         <div className="card-inner">
                             {description === true && !openState ?
                                 <p>
-                                    {store.model.description}
+                                    {store.model.description === undefined ? 'Ooof! Seems like you didnt add a description for this book, click edit button to add one!' : store.model.description}
                                 </p>
                                 : null}
                             {description === true && openState ?

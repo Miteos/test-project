@@ -26,7 +26,7 @@ export class BookService {
                 },
             };
 
-            const request = new Request(apiUrl +'/books' +'.json' + urlParams , options);
+            const request = new Request(`${apiUrl}/books.json${urlParams}` , options);
             const response = await fetch(request);
             return await response.json()
 
@@ -40,9 +40,8 @@ export class BookService {
             headers,
             body: JSON.stringify(model)
         };
-        const request = new Request(apiUrl + '/books' + '.json', options);
-        const response = await fetch(request);
-        return response;
+        const request = new Request(`${apiUrl}/books.json`, options);
+        return await fetch(request);
     };
     patch = async (model, urlParams) => {
         const headers = new Headers();
@@ -52,9 +51,8 @@ export class BookService {
             headers,
             body: JSON.stringify(model)
         };
-        const request = new Request(apiUrl+ '/books' +'/'+ urlParams + '.json', options);
-        const response = await fetch(request);
-        return response;
+        const request = new Request(`${apiUrl}/books/${urlParams}.json`, options);
+        return await fetch(request);
     };
     delete = async (id) => {
         const options = {
@@ -65,7 +63,7 @@ export class BookService {
                 'Access-Control-Allow-Origin': '*'
             },
         };
-        const request = new Request(apiUrl + '/books' + "/" + id +'.json', options);
+        const request = new Request(`${apiUrl}/books/${id}.json`, options);
         const response = await fetch(request);
         return await response.json()
     }

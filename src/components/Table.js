@@ -36,7 +36,7 @@ const Table = ({store, hasAddButton, libraryStore}) =>{
                             <td>{b.status}</td>
                             <td>{b.cover}</td>
                             <td>{b.pages}</td>
-                            {b.url === '' ? <td>No url found</td> : <td className="clickable"><a href={b.url}>{b.url.substr(0, 5) + '...'}</a></td>}
+                            {b.url === '' ? <td>No url found</td> : <td className="clickable"><a href={b.url} target="_blank" rel="noreferrer">{b.url.substr(0, 5) + '...'}</a></td>}
                             <td className="clickable"><Link to={`/edit-book/${b.id}`}>{edit}</Link></td>
                             <td className="clickable"><Link to={`/book-details/${b.id}`}>{details}</Link></td>
                             <td className="clickable" onClick={() => store.deleteBook(b.id)}>{trash}</td>

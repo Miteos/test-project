@@ -1,7 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import SimpleInput from './inputs/TextFormInput';
-import SelectFormInput from "./inputs/SelectFormInput";
 import {Link} from "react-router-dom";
 import TextAreaFormInput from "./inputs/TextAreaFormInput";
 

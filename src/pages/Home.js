@@ -9,7 +9,7 @@ function Home(){
     return (
         <div className="App">
             <MainTitle title={'The Great Library'}/>
-            <Link to={'/libraries'}>Libraries</Link>
+            <Link to={'/libraries'}><button className="green-button">Libraries</button></Link>
             <TableView data = {tableStore} pageUrl={'books'} />
 
         </div>

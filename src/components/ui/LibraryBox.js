@@ -1,8 +1,7 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import {Observer} from "mobx-react";
 import {MainTitle} from "../MainTitle";
 import {Link} from "react-router-dom";
-
 
 const LibraryBox = ({title,id}) => {
     return(

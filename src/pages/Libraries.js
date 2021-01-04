@@ -1,5 +1,4 @@
 import React from "react";
-import NewBookView from "../components/NewBookView";
 import {MainTitle} from "../components/MainTitle";
 import LibraryView from "../components/LibraryView";
 import {LibraryViewStore} from "../stores/LibraryViewStore";

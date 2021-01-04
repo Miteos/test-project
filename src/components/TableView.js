@@ -4,12 +4,12 @@ import Spinner from "./animations/Spinner";
 import Table from "./Table";
 import TableFilters from "./TableFilters";
 
-const TableView = ({data,pageUrl, hasAddButton,library}) => {
+const TableView = ({data, hasAddButton,library}) => {
     const store = data;
-    const url = pageUrl
 
     useEffect(() => {
-           store.getData(url);
+           store.getData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         }, []);
 
          return(

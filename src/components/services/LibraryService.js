@@ -40,7 +40,7 @@ export class LibraryService {
             },
         };
 
-        const request = new Request(apiUrl +'/' + node + '/books' +'.json' + urlParams  , options);
+        const request = new Request(`${apiUrl}/${node}/books.json${urlParams}`  , options);
         const response = await fetch(request);
         return await response.json()
 
@@ -66,7 +66,7 @@ export class LibraryService {
             headers,
             body: JSON.stringify(model)
         };
-        const request = new Request(apiUrl+'/'+ urlParams +'/books'+ '.json', options);
+        const request = new Request(`${apiUrl}/${urlParams}/books.json`, options);
         const response = await fetch(request);
         return response;
     };
@@ -82,7 +82,7 @@ export class LibraryService {
         const response = await fetch(request);
         return response;
     };
-    delete = async (node,uid) => {
+    deleteLibrary = async (id)=>{
         const options = {
             method: "DELETE",
             headers : {
@@ -91,7 +91,20 @@ export class LibraryService {
                 'Access-Control-Allow-Origin': '*'
             },
         };
-        const request = new Request(apiUrl +'/' + node + '/books/'  + uid  +'.json' , options);
+        const request = new Request(apiUrl +'/' + id  +'.json' , options);
+        const response = await fetch(request);
+        return await response.json()
+    }
+    deleteBookInLibrary = async (node, uid) => {
+        const options = {
+            method: "DELETE",
+            headers : {
+                "Content-Type": "application/json",
+                'Authorization':apiKey,
+                'Access-Control-Allow-Origin': '*'
+            },
+        };
+        const request = new Request(apiUrl +'/' + node + '/books/'+ uid  +'.json' , options);
         const response = await fetch(request);
         return await response.json()
     }

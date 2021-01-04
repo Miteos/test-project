@@ -8,10 +8,10 @@ import reportWebVitals from './reportWebVitals';
 import {RootStore} from "./stores/RootStore";
 import { BrowserRouter } from 'react-router-dom';
 
-
+const rootStore = new RootStore()
 ReactDOM.render(
   <React.StrictMode>
-      <Provider rootStore = {new RootStore()}>
+      <Provider rootStore = {rootStore}>
           <BrowserRouter>
               <App />
           </BrowserRouter>

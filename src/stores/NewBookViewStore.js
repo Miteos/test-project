@@ -80,7 +80,6 @@ export class NewBookViewStore {
     }
     @action editBook = async (form) => {
         const node = form.values().node;
-        const id = form.values().id;
         try {
             this.model = form.values();
             const response = await this.api.patch(this.model,node);

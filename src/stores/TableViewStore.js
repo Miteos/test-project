@@ -1,4 +1,4 @@
-import {action, autorun, computed, observable, runInAction, set} from "mobx";
+import {action, observable, runInAction} from "mobx";
 import {BookService} from "../components/services/BookService";
 
 
@@ -13,38 +13,42 @@ export class TableViewStore {
 
     statusArray = ['All', 'Completed', 'To-Read'];
     sortArray = ['Unsorted', 'Ascending', 'Descending'];
-    @observable  apiData = [];
+    apiData = [];
+    filteredList = [];
+    itemsPerPage = 5;
     @observable  status = 'All';
-    @observable  filteredList = [];
     @observable  sorted = 'Unsorted';
-    @observable  itemsPerPage = 5;
     @observable  lastPage = '';
     @observable  error = '';
     @observable  page = 1;
     @observable  loading = true;
 
 
-    @action  getData = async (url) => {
+    @action getData = async () => {
         this.loading = true;
         try {
             if (this.status === 'All' && this.sorted === 'Unsorted') {
                 const data = await this.api.get('books');
-                const toArray = Object.keys(data).map(i => data[i]);
-                this.apiData = toArray;
+                if (data !== null){
+                    this.apiData = Object.keys(data).map(i => data[i]);
+                }
+                else  runInAction(()=>{
+                    this.apiData = []
+                })
+
             }
             if (this.status === 'Completed' || this.status === 'To-Read') {
                 const data = await this.api.find(`?&orderBy="status"&equalTo="${this.status}"`);
-                const toArray = Object.keys(data).map(i => data[i]);
-                this.apiData = toArray;
+                this.apiData = Object.keys(data).map(i => data[i]);
 
             } else if (this.sorted !== 'Unsorted' && this.status === 'All') {
                 const data = await this.api.find(`?&orderBy="author"`);
                 const toArray = Object.keys(data).map(i => data[i]);
                 const desc = toArray.slice().sort((a, b) => a.author.localeCompare(b.author));
                 const asc = toArray.slice().sort((a, b) => b.author.localeCompare(a.author));
-                if (this.sorted === 'Ascending') {
+                    if (this.sorted === 'Ascending') {
                         this.apiData = asc;
-                } else this.apiData = desc
+                    } else this.apiData = desc
             }
         } catch (error) {
                 this.error = "error";
@@ -60,13 +64,11 @@ export class TableViewStore {
             this.loading = true;
             const getNode = await this.api.find(`?&orderBy="id"&equalTo="${id}"`);
             const forUrl = Object.keys(getNode)[0];
-            const response = await this.api.delete(forUrl);
-            if (response.status === 204) {
-                this.loading = false
-            }
+            await this.api.delete(forUrl);
         } catch (error) {
                 this.error = "error";
         } finally {
+                this.loading = false
                 this.getData()
         }
     };
@@ -117,6 +119,7 @@ export class TableViewStore {
         const indexLastBook = this.page * this.itemsPerPage;
         const indexFirstBook = indexLastBook - this.itemsPerPage;
         this.filteredList = this.apiData.slice(indexFirstBook, indexLastBook);
+
     }
 
 

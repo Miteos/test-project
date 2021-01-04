@@ -1,5 +1,4 @@
 import React from "react";
-import {MainTitle} from "../components/MainTitle";
 import {useParams} from 'react-router-dom'
 import BookDetailsView from "../components/BookDetailsView";
 

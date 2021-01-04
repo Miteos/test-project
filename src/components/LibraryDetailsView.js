@@ -56,9 +56,10 @@ class LibraryDetailsView extends React.Component {
                         <div>
                             { this.ui.isOpen === true ?<TableView data={this.bookStore} pageUrl={'books'} hasAddButton library={this.store}/> : null}
                         </div>
-                            {this.store.libraryBooks.length ?  <div>
-                            {this.store.filteredBookData.length>0?<LibraryBookList data={this.store.filteredBookData} store={this.store}/> : null}
-                        </div> : null}
+                                <div>
+                                 <LibraryBookList data={this.store.filteredBookData} store={this.store}/>
+                                 {this.store.filteredBookData.length===0 ? 'Currently no books in the library':null}
+                                </div>
                     </div>
                 </div>
             </div>

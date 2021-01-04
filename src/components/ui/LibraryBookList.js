@@ -1,8 +1,12 @@
-import React from  'react'
+import React,{useEffect} from  'react'
 import ListItem from "./ListItem";
 import {Observer} from "mobx-react";
 
 const LibraryBookList = ({data,store})=> {
+    useEffect(() => {
+        store.getData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
     return(
         <Observer>{() =>
             <div className="item-2">
