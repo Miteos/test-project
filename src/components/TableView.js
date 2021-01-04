@@ -4,11 +4,12 @@ import Spinner from "./animations/Spinner";
 import Table from "./Table";
 import TableFilters from "./TableFilters";
 
-const TableView = ({data}) => {
+const TableView = ({data,pageUrl, hasAddButton,library}) => {
     const store = data;
+    const url = pageUrl
 
     useEffect(() => {
-           store.getData();
+           store.getData(url);
         }, []);
 
          return(
@@ -16,7 +17,7 @@ const TableView = ({data}) => {
                  <div className="container">
                      <TableFilters store={store}/>
                      {store.loading === true ? <Spinner/> : null}
-                     <Table store = {store}/>
+                     <Table  store = {store} hasAddButton={hasAddButton}  libraryStore={library}/>
                  </div>
              }
              </Observer>

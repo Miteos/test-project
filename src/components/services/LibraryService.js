@@ -12,7 +12,7 @@ export class LibraryService {
             },
         };
 
-        const request = new Request(apiUrl + '.json', options);
+        const request = new Request(apiUrl +'.json', options);
         const response = await fetch(request);
         return await response.json();
     };
@@ -27,6 +27,20 @@ export class LibraryService {
         };
 
         const request = new Request(apiUrl + '.json' + urlParams , options);
+        const response = await fetch(request);
+        return await response.json()
+
+    };
+    findBook = async (node,urlParams) => {
+        let options = {
+            method: "GET",
+            headers : {
+                'Authorization':apiKey,
+                'Access-Control-Allow-Origin': '*'
+            },
+        };
+
+        const request = new Request(apiUrl +'/' + node + '/books' +'.json' + urlParams  , options);
         const response = await fetch(request);
         return await response.json()
 
@@ -68,7 +82,7 @@ export class LibraryService {
         const response = await fetch(request);
         return response;
     };
-    delete = async (id) => {
+    delete = async (node,uid) => {
         const options = {
             method: "DELETE",
             headers : {
@@ -77,7 +91,7 @@ export class LibraryService {
                 'Access-Control-Allow-Origin': '*'
             },
         };
-        const request = new Request(apiUrl + "/" + id +'.json', options);
+        const request = new Request(apiUrl +'/' + node + '/books/'  + uid  +'.json' , options);
         const response = await fetch(request);
         return await response.json()
     }

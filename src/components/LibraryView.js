@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react'
-import {Observer, observer} from "mobx-react";
+import {Observer} from "mobx-react";
 import {Link} from "react-router-dom";
 import LibraryBox from "./ui/LibraryBox";
 
@@ -17,9 +17,9 @@ const LibraryView =({data})=>{
                 <div className="container">
                     <button className="green-button"><Link to='/add-library'>Add a Library</Link></button>
                     <div>
-                        {store.apiData.length === 0 ? <p>
+                        {store.apiData.length === 0 ?
                             <p>Whoops! Seems like you dont have any libraries...</p>
-                        </p> : null}
+                        : null}
                         {store.apiData.map((a,i)=>(
                             <div key={i}>
                                 <LibraryBox  title={a.library} id={a.id}/>

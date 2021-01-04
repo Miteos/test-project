@@ -550,16 +550,33 @@ form{
 }
 .list-item {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  border:thin solid #ccc;
-  background-color:#ccc ;
-  padding:10px;
-  border-radius: 10px;
+  flex-direction: column;
+  border-top:thin solid #ccc;
+  padding: 10px;
   color: black;
-  margin-bottom: 5px;
+  transition: 0.2s ease-out;
+}
+.list-item a{
+  display: inline;
+}
+.list-item :first-child{
+  border-top:none;
+}
+.list-item:hover{
+  background-color: whitesmoke ;
+  -webkit-box-shadow: 0 5px 5px 5px rgba(0, 0, 0, 0.10);
+  box-shadow: 0 5px 5px 5px rgba(0, 0, 0, 0.10);
+  transition: 0.2s ease-in;
 }
 .margin-0{
   margin: 0!important;
+}
+.pb-10{
+  padding-bottom: 10px;
+}
+.library-books-add{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 10px;
 }

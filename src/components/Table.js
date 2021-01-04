@@ -1,24 +1,26 @@
 import React from 'react'
 import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEdit, faEye,faTrash} from "@fortawesome/free-solid-svg-icons";
+import {faEdit, faEye, faPlus, faTrash} from "@fortawesome/free-solid-svg-icons";
 import Pagination from "./Pagination";
 import {Observer} from "mobx-react";
 
 const edit = <FontAwesomeIcon icon={faEdit} size={"sm"} />;
 const details = <FontAwesomeIcon icon={faEye} size={"sm"} />;
 const trash = <FontAwesomeIcon icon={faTrash} size={"sm"} />;
+const plus = <FontAwesomeIcon icon={faPlus} size={"sm"} />;
 
-const Table = ({store}) =>{
+const Table = ({store, hasAddButton, libraryStore}) =>{
     return(
         <Observer>{() =>
             <div>
                 <table className="styled-table">
                     <thead>
                     <tr>
-                        {['ID', 'Author', 'Title', 'Status', 'Cover', 'Pages', 'Url', 'Edit', 'Details', 'Delete'].map((headers, i) => (
+                        { hasAddButton ===true ? ['ID', 'Author', 'Title', 'Status', 'Cover', 'Pages', 'Url', 'Edit', 'Details', 'Delete','Add to library'].map((headers, i) => (
                             <th key={i}>{headers}</th>
-                        ))}
+                        )) : ['ID', 'Author', 'Title', 'Status', 'Cover', 'Pages', 'Url', 'Edit', 'Details', 'Delete'].map((headers, i) => (
+                            <th key={i}>{headers}</th>))}
                     </tr>
                     </thead>
                     <tbody>
@@ -38,6 +40,7 @@ const Table = ({store}) =>{
                             <td className="clickable"><Link to={`/edit-book/${b.id}`}>{edit}</Link></td>
                             <td className="clickable"><Link to={`/book-details/${b.id}`}>{details}</Link></td>
                             <td className="clickable" onClick={() => store.deleteBook(b.id)}>{trash}</td>
+                            { hasAddButton === true ? <td className="clickable" onClick={()=>libraryStore.addBookToLibrary(b,libraryStore.model.id)}>{plus}</td> : null}
                         </tr>
                     ))}
                     </tbody>

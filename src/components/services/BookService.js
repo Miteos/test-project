@@ -1,9 +1,9 @@
-const apiUrl = "https://test-project-ea9e5-default-rtdb.europe-west1.firebasedatabase.app/books";
+const apiUrl = "https://test-project-ea9e5-default-rtdb.europe-west1.firebasedatabase.app/";
 const apiKey = process.env.REACT_APP_LIBRARY_API_KEY;
 
 export class BookService {
 
-    get = async () => {
+    get = async (additionalUrl) => {
         let options = {
             method: "GET",
             headers: {
@@ -12,7 +12,7 @@ export class BookService {
             },
         };
 
-        const request = new Request(apiUrl + '.json', options);
+        const request = new Request(apiUrl + additionalUrl+'.json', options);
         const response = await fetch(request);
         return await response.json();
     };
@@ -26,7 +26,7 @@ export class BookService {
                 },
             };
 
-            const request = new Request(apiUrl + '.json' + urlParams , options);
+            const request = new Request(apiUrl +'/books' +'.json' + urlParams , options);
             const response = await fetch(request);
             return await response.json()
 
@@ -40,7 +40,7 @@ export class BookService {
             headers,
             body: JSON.stringify(model)
         };
-        const request = new Request(apiUrl + '.json', options);
+        const request = new Request(apiUrl + '/books' + '.json', options);
         const response = await fetch(request);
         return response;
     };
@@ -52,7 +52,7 @@ export class BookService {
             headers,
             body: JSON.stringify(model)
         };
-        const request = new Request(apiUrl+'/'+ urlParams + '.json', options);
+        const request = new Request(apiUrl+ '/books' +'/'+ urlParams + '.json', options);
         const response = await fetch(request);
         return response;
     };
@@ -65,7 +65,7 @@ export class BookService {
                 'Access-Control-Allow-Origin': '*'
             },
         };
-        const request = new Request(apiUrl + "/" + id +'.json', options);
+        const request = new Request(apiUrl + '/books' + "/" + id +'.json', options);
         const response = await fetch(request);
         return await response.json()
     }

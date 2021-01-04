@@ -15,7 +15,6 @@ class BookDetailsView extends React.Component {
     async  componentDidMount() {
         if (this.id !==undefined){
             await this.store.getBook(this.id)
-            console.log(this.id)
         }
     }
     componentDidUpdate(){

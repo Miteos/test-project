@@ -10,11 +10,9 @@ export class BookDetailsViewStore {
     @observable revOpen = false;
     @action openDescriptionForm = () =>{
         this.descOpen = !this.descOpen;
-        console.log(this.descOpen)
     }
     @action openDetailsForm = () =>{
         this.detOpen = !this.detOpen;
-        console.log(this.detOpen)
     }
     @action openReviewForm = () =>{
         this.revOpen = !this.revOpen;

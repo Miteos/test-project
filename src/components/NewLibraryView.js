@@ -7,11 +7,6 @@ import NewLibraryForm from "./forms/NewLibraryForm";
 @observer
 class NewLibraryView extends React.Component {
     store = this.props.rootStore.newLibraryStore;
-    // async  componentDidMount() {
-    //     if (this.id !==undefined){
-    //         await this.store.getBook(this.id)
-    //     }else await  this.store.resetData()
-    // }
     render() {
         const form = new NewLibraryForm({
             values: {

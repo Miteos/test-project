@@ -19,48 +19,34 @@ export class NewLibraryViewStore {
     }
     @observable isLoading = true;
 
-
     @action librarySubmit = async (form) => {
-        this.isLoading = true;
         try {
-            runInAction(() => {
+                this.isLoading = true;
                 this.model = form.values()
-            });
-            await runInAction(() => {
-                this.model.id = uuid()
-            });
-            await this.api.post(this.model);
-            runInAction(() => {
+                this.model.id = uuid();
+                this.model.books =[];
+                await this.api.post(this.model);
                 this.status = "success";
                 this.isLoading = false;
                 alert('Successfully added a library!')
-            })
         } catch (error) {
-            runInAction(() => {
                 this.status = "error";
-            });
         }
     };
     @action editLibrary= async (form) => {
         const node = form.values().node;
         const id = form.values().id;
         try {
-            runInAction(() => {
-                this.model = form.values();
-            });
-            const response = await this.api.patch(this.model,node);
+            this.model = form.values();
+            const response = await this.api.patch(this.model, node);
             if (response.status === 200) {
-                runInAction(() => {
-                    this.status = "success";
-                    this.isLoading = false;
-                    alert('Success')
-                })
+                this.status = "success";
+                this.isLoading = false;
+                alert('Success')
             }
         } catch (error) {
-            runInAction(() => {
-                this.status = "error";
-            })
-        }finally {
+            this.status = "error";
         }
-    };
+
+    }
 }

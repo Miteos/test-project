@@ -1,32 +1,29 @@
 import React from 'react'
 import Card from "./inputs/Card";
 import {inject, observer} from "mobx-react";
-import BookDescriptionForm from "./forms/BookDescriptionForm";
-import NewBookForm from "./forms/NewBookForm";
-import BookReviewForm from "./forms/BookReviewForm";
 import {MainTitle} from "./MainTitle";
-import AddLibraryForm from "./AddLibraryForm";
 import NewLibraryForm from "./forms/NewLibraryForm";
-import ListItem from "./ui/ListItem";
-import Table from "./Table";
+import LibraryBookList from "./ui/LibraryBookList";
+import TableView from "./TableView";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faPlus} from "@fortawesome/free-solid-svg-icons/faPlus";
+import {faWindowClose} from "@fortawesome/free-solid-svg-icons";
 
+
+const plus = <FontAwesomeIcon icon={faPlus} size={"sm"} />;
+const close = <FontAwesomeIcon icon={faWindowClose} size={"sm"} />;
 @inject('rootStore')
 @observer
 class LibraryDetailsView extends React.Component {
     store = this.props.rootStore.libraryStore;
+    bookStore = this.props.rootStore.tableStore
     ui = this.props.rootStore.libraryDetailsStore;
     id = this.props.id;
-     componentDidMount() {
+   async componentDidMount() {
         if (this.id !==undefined){
-            this.store.getLibrary(this.id) &&this.store.getBooks();
-
-            // this.store.getBooks()
-            console.log(this.id)
+            await this.store.getLibrary(this.id)
+            await this.store.getBooks()
         }
-    }
-    componentDidUpdate(){
-        this.store.getLibrary(this.id)
-             // this.store.getBooks()
     }
     render() {
         const detailsLibraryForm = new NewLibraryForm( {
@@ -45,18 +42,23 @@ class LibraryDetailsView extends React.Component {
                     <Card
                         title={"Library Details"}
                         library
-                        opener={this.ui.openLibraryDescriptionForm}
+                        opener={()=>this.ui.openLibraryDescriptionForm(this.id)}
                         position={1}
                         detLibraryForm={detailsLibraryForm}
                         store={this.store}
                         openState = {this.ui.detLibraryOpen}
                     />
+
                     <div className="item-2">
-                            {this.store.bookData.map((b,i)=>(
-                                <div key={i}>
-                                    <ListItem author={b.author} title={b.title} handler={()=>this.store.addBookToLibrary(b)}/>
-                                </div>
-                                ))}
+                        <div className="library-books-add">
+                            <button className="icon-button" onClick={this.ui.openAddBooks}>{ this.ui.isOpen === false ? plus : close}</button>
+                        </div>
+                        <div>
+                            { this.ui.isOpen === true ?<TableView data={this.bookStore} pageUrl={'books'} hasAddButton library={this.store}/> : null}
+                        </div>
+                            {this.store.libraryBooks.length ?  <div>
+                            {this.store.filteredBookData.length>0?<LibraryBookList data={this.store.filteredBookData} store={this.store}/> : null}
+                        </div> : null}
                     </div>
                 </div>
             </div>

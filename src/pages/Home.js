@@ -10,7 +10,7 @@ function Home(){
         <div className="App">
             <MainTitle title={'The Great Library'}/>
             <Link to={'/libraries'}>Libraries</Link>
-            <TableView data = {tableStore}  />
+            <TableView data = {tableStore} pageUrl={'books'} />
 
         </div>
 

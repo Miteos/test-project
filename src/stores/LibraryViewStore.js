@@ -26,60 +26,55 @@ export class LibraryViewStore {
         id:'',
         node:''
     };
+    @observable libraryBooks =[]
+    @observable filteredBookData = []
 
     @action  getBooks = async () => {
         this.loading = true;
+        let url = 'libraries/' + this.currentLibrary +'/books';
         try {
-            const data = await this.bookApi.get();
-            const toArray = Object.keys(data).map(i => data[i]);
-                runInAction(() => {
-                    this.bookData = toArray;
-                });
-        } catch (error) {
-            runInAction(() => {
-                this.error = "error";
-            })
-        }finally {
-            runInAction(() => {
-                this.loading = false
+            const data = await this.bookApi.get(url);
+            this.bookData = Object.keys(data).map(i => data[i]);
+            const setForRemovingDuplicates = new Set()
+            this.filteredBookData = this.bookData.filter(el =>{
+                const duplicate = setForRemovingDuplicates.has(el.id)
+                setForRemovingDuplicates.add(el.id)
+                return !duplicate
             });
+        } catch (error) {
+                this.error = "error";
+        }finally {
+                this.loading = false
         }
     };
     @action  getData = async () => {
         this.loading = true;
         try {
             const data = await this.api.get();
-            const toArray = Object.keys(data).map(i => data[i]);
-                runInAction(() => {
-                    this.apiData = toArray;
-                });
+            this.apiData = Object.keys(data).map(i => data[i]);
         } catch (error) {
-            runInAction(() => {
                 this.error = "error";
-            })
         }finally {
-            runInAction(() => {
                 this.loading = false
-            });
         }
     };
 
     @action getLibrary = async (id) => {
+        this.loading = true;
         try {
-            this.loading = true;
             const getNode = await this.api.find(`?&orderBy="id"&equalTo="${id}"`);
             const uid = Object.keys(getNode);
             const toArray = Object.values(getNode);
-            runInAction(() => {
-                this.model.library = toArray[0].library;
-                this.model.genre = toArray[0].genre;
-                this.model.description = toArray[0].description;
-                this.model.id = toArray[0].id;
-                this.model.books = toArray[0].books;
-                this.currentLibrary = uid[0];
-                this.status = "success";
-                this.isLoading = false;
-            })
+            this.model.library = toArray[0].library;
+            this.model.genre = toArray[0].genre;
+            this.model.description = toArray[0].description;
+            this.model.id = toArray[0].id;
+            this.currentLibrary = uid[0];
+            this.status = "success";
+            this.loading = false;
+        if (toArray[0].books){
+            this.libraryBooks = Object.keys(toArray[0].books).map(i => toArray[0].books[i])
+        }else this.libraryBooks = []
         } catch (error) {
             runInAction(() => {
                 this.status = "error";
@@ -90,41 +85,45 @@ export class LibraryViewStore {
     @action librarySubmit = async (form) => {
         this.loading = true;
         try {
-            runInAction(() => {
-                this.model = form.values()
-            });
-            await runInAction(() => {
-                this.model.id = uuid()
-            });
+            this.model = form.values();
+            this.model.id = uuid();
             await this.api.post(this.book);
-            runInAction(() => {
-                this.status = "success";
-                this.isLoading = false;
-                alert('Successfully added a library!')
-            })
+            this.status = "success";
+            this.loading = false;
+            alert('Successfully added a library!')
         } catch (error) {
-            runInAction(() => {
                 this.status = "error";
-            });
         }
     };
-    @action addBookToLibrary = async (value) => {
+    @action addBookToLibrary = async (value,id) => {
         this.loading = true;
         try {
-            this.book.books=value;
-            console.log(value)
             const response = await this.api.postBook(value,this.currentLibrary);
             if (response.status === 200) {
-                runInAction(() => {
                     this.status = "success";
                     this.loading = false;
-                })
             }
         } catch (error) {
-            runInAction(() => {
                 this.status = "error";
-            })
         }finally {
+            alert('Successfully added a book to this library!')
+            this.getBooks()
+        }
+    };
+    @action deleteBookFromLibrary = async (id) => {
+        this.loading = true;
+        try {
+            const getNode = await this.api.findBook(this.currentLibrary,`?&orderBy="id"&equalTo="${id}"`);
+            const forUrl = Object.keys(getNode)[0];
+            const response = await this.api.delete(this.currentLibrary,forUrl);
+            if (response.status === 204) {
+                this.loading = false
+                alert("Success! This book has been deleted from library!")
+            }
+        } catch (error) {
+            this.error = "error";
+        } finally {
+            this.getBooks()
         }
     };
 }
