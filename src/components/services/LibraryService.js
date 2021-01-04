@@ -55,8 +55,7 @@ export class LibraryService {
             body: JSON.stringify(model)
         };
         const request = new Request(apiUrl + '.json', options);
-        const response = await fetch(request);
-        return response;
+        return await fetch(request);
     };
     postBook= async (model, urlParams ) => {
         const headers = new Headers();
@@ -67,8 +66,7 @@ export class LibraryService {
             body: JSON.stringify(model)
         };
         const request = new Request(`${apiUrl}/${urlParams}/books.json`, options);
-        const response = await fetch(request);
-        return response;
+        return await fetch(request);
     };
     patch = async (model, urlParams ) => {
         const headers = new Headers();
@@ -79,8 +77,7 @@ export class LibraryService {
             body: JSON.stringify(model)
         };
         const request = new Request(apiUrl+'/'+ urlParams + '.json', options);
-        const response = await fetch(request);
-        return response;
+        return await fetch(request);
     };
     deleteLibrary = async (id)=>{
         const options = {
