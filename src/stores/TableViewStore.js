@@ -1,9 +1,9 @@
-import {action, observable, runInAction} from "mobx";
+import {action, observable} from "mobx";
 import {BookService} from "../components/services/BookService";
 
 
 export class TableViewStore {
-    @observable books = [];
+    @observable.shallow books = [];
 
     constructor(rootStore) {
         this.rootStore = rootStore;
@@ -32,10 +32,7 @@ export class TableViewStore {
                 if (data !== null){
                     this.apiData = Object.keys(data).map(i => data[i]);
                 }
-                else  runInAction(()=>{
-                    this.apiData = []
-                })
-
+                else this.apiData = []
             }
             if (this.status === 'Completed' || this.status === 'To-Read') {
                 const data = await this.api.find(`?&orderBy="status"&equalTo="${this.status}"`);
