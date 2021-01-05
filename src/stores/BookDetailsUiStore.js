@@ -1,13 +1,15 @@
 import {action, observable} from "mobx";
 
 
-export class BookDetailsViewStore {
+export class BookDetailsUiStore {
     constructor(rootStore) {
         this.rootStore = rootStore;
     }
     @observable descOpen = false;
     @observable detOpen = false;
     @observable revOpen = false;
+
+
     @action openDescriptionForm = () =>{
         this.descOpen = !this.descOpen;
     }

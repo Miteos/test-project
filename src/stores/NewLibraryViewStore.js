@@ -17,17 +17,17 @@ export class NewLibraryViewStore {
         id:'',
         node:''
     }
-    @observable isLoading = true;
+    @observable loading = true;
 
     @action librarySubmit = async (form) => {
         try {
-                this.isLoading = true;
+                this.loading = true;
                 this.model = form.values()
                 this.model.id = uuid();
                 this.model.books =[];
                 await this.api.post(this.model);
                 this.status = "success";
-                this.isLoading = false;
+                this.loading = false;
                 alert('Successfully added a library!')
         } catch (error) {
                 this.status = "error";
@@ -40,7 +40,7 @@ export class NewLibraryViewStore {
             const response = await this.api.patch(this.model, node);
             if (response.status === 200) {
                 this.status = "success";
-                this.isLoading = false;
+                this.loading = false;
                 alert('Success')
             }
         } catch (error) {

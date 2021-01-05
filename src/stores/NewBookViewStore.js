@@ -22,19 +22,18 @@ export class NewBookViewStore {
     };
     @observable currentBook = null;
     @observable status = '';
-    @observable selectStatusArray = ['Completed', 'To-Read'];
-    @observable isLoading = true;
+    @observable loading = true;
     @observable description = '';
     @observable review = '';
 
     @action handleBookSubmit = async (form) => {
-        this.isLoading = true;
+        this.loading = true;
         try {
             this.model = form.values()
             this.model.id = uuid()
             await this.api.post(this.model);
             this.status = "success";
-            this.isLoading = false;
+            this.loading = false;
             alert('Successfully added a book!')
         } catch (error) {
             this.status = "error";
@@ -43,7 +42,7 @@ export class NewBookViewStore {
     };
     @action getBook = async (id) => {
         try {
-            this.isLoading = true;
+            this.loading = true;
             const getNode = await this.api.find(`?&orderBy="id"&equalTo="${id}"`);
             const uid = Object.keys(getNode);
             const toArray = Object.values(getNode);
@@ -58,14 +57,14 @@ export class NewBookViewStore {
             this.model.url = toArray[0].url;
             this.currentBook = uid[0];
             this.status = "success";
-            this.isLoading = false;
+            this.loading = false;
         } catch (error) {
             this.status = "error";
         }
     };
     @action  resetData = () =>{
         try {
-            this.isLoading = true;
+            this.loading = true;
             this.model.author = '';
             this.model.status = '';
             this.model.title = '';
@@ -75,7 +74,8 @@ export class NewBookViewStore {
             this.model.url = '';
             this.model.description = '';
             this.model.review = '';
-        }catch (e) {
+        }catch (error) {
+            this.status = "error";
         }
     }
     @action editBook = async (form) => {
@@ -85,7 +85,7 @@ export class NewBookViewStore {
             const response = await this.api.patch(this.model,node);
             if (response.status === 200) {
                     this.status = "success";
-                    this.isLoading = false;
+                    this.loading = false;
                     alert('Success')
             }
         } catch (error) {

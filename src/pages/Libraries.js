@@ -8,7 +8,7 @@ const store = new LibraryViewStore();
 function  Libraries(){
     return (
         <div>
-                <MainTitle title={'Your libraries'}/>
+                <MainTitle title={'Your libraries'} withLink/>
                 <LibraryView data = {store}/>
         </div>
     );

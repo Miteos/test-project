@@ -9,8 +9,8 @@ export class LibraryViewStore {
         this.api = new LibraryService();
         this.bookApi = new BookService();
     }
-    @observable  apiData = [];
-    @observable  bookData = [];
+    @observable.shallow  apiData = [];
+    bookData = [];
     @observable loading = true;
     @observable currentLibrary = '';
     @observable status = '';
@@ -22,8 +22,7 @@ export class LibraryViewStore {
         id:'',
         node:''
     };
-    @observable libraryBooks =[]
-    @observable filteredBookData = []
+    @observable.shallow filteredBookData = []
 
     @action  getBooks = async () => {
         this.loading = true;
@@ -77,16 +76,12 @@ export class LibraryViewStore {
             this.currentLibrary = uid[0];
             this.status = "success";
             this.loading = false;
-        if (toArray[0].books){
-            this.libraryBooks = Object.keys(toArray[0].books).map(i => toArray[0].books[i])
-        }
-        else this.libraryBooks = []
         }
         catch (error) {
                 this.status = "error";
         }
     };
-    @action addBookToLibrary = async (value,id) => {
+    @action addBookToLibrary = async (value) => {
         this.loading = true;
         try {
             const response = await this.api.postBook(value,this.currentLibrary);
@@ -98,7 +93,7 @@ export class LibraryViewStore {
         } catch (error) {
                 this.status = "error";
         }finally {
-            this.getBooks()
+          await  this.getBooks()
         }
     };
     @action deleteBookFromLibrary = async (id) => {
@@ -114,7 +109,7 @@ export class LibraryViewStore {
             this.error = "error";
         } finally {
             alert("Success! This book has been deleted from library!")
-            this.getBooks()
+            await this.getBooks()
         }
     };
     @action deleteLibrary = async (id) => {
@@ -129,7 +124,7 @@ export class LibraryViewStore {
         } catch (error) {
             this.error = "error";
         } finally {
-            this.getData()
+            await this.getData()
             alert("Success! This library has been deleted!")
         }
     };

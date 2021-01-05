@@ -13,8 +13,8 @@ export class TableViewStore {
 
     statusArray = ['All', 'Completed', 'To-Read'];
     sortArray = ['Unsorted', 'Ascending', 'Descending'];
-    apiData = [];
-    filteredList = [];
+    @observable.shallow apiData = [];
+    @observable.shallow filteredList = [];
     itemsPerPage = 5;
     @observable  status = 'All';
     @observable  sorted = 'Unsorted';
@@ -68,8 +68,8 @@ export class TableViewStore {
         } catch (error) {
                 this.error = "error";
         } finally {
-                this.loading = false
-                this.getData()
+                 await  this.getData()
+                 this.loading = false
         }
     };
 
@@ -129,9 +129,9 @@ export class TableViewStore {
 
     };
     @action resetFilters = () => {
-        this.getData();
         this.status = 'All';
         this.sorted = 'Unsorted'
+        this.getData();
     };
 }
 
