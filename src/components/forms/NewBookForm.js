@@ -3,10 +3,13 @@ import dvr from "mobx-react-form/lib/validators/DVR";
 import validatorjs from "validatorjs";
 import {NewBookViewStore} from "../../stores/NewBookViewStore";
 
-const store = new NewBookViewStore()
 
 export default class NewBookForm extends Form {
 
+    constructor(props) {
+        super(props);
+        this.store = new NewBookViewStore()
+    }
     plugins() {
         return {
             dvr: dvr(validatorjs)
@@ -68,9 +71,9 @@ export default class NewBookForm extends Form {
         return {
           async  onSuccess(form) {
                 if(form.values().id === ""){
-                  await  store.handleBookSubmit(form);
+                  await  this.store.handleBookSubmit(form);
                 }
-                else await store.editBook(form);
+                else await this.store.editBook(form);
             },
             onError(form) {
                 alert("Form has errors!");
@@ -78,7 +81,7 @@ export default class NewBookForm extends Form {
                 console.log("All form errors", form.errors());
             },
             onClear(form){
-                store.resetData()
+                this.store.resetData()
             }
         };
     }

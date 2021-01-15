@@ -40,7 +40,7 @@ export class BookService {
             headers,
             body: JSON.stringify(model)
         };
-        const request = new Request(`${apiUrl}/books.json`, options);
+        const request = new Request(`${apiUrl}books.json`, options);
         return await fetch(request);
     };
     patch = async (model, urlParams) => {

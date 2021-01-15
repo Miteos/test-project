@@ -4,8 +4,6 @@ import SimpleInput from './inputs/TextFormInput';
 import SelectFormInput from "./inputs/SelectFormInput";
 import {Link} from "react-router-dom";
 
-
-
 export default observer(({ form,id,goBack }) => (
     <form onSubmit={form.onSubmit}>
         <SimpleInput field={form.$('author')} />

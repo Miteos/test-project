@@ -1,16 +1,16 @@
 import {action, observable} from "mobx";
 import {BookService} from "../components/services/BookService";
 import uuid from 'react-uuid'
+import NewBookForm from "../components/forms/NewBookForm";
+
 
 
 export class NewBookViewStore {
-    constructor(rootStore) {
-        this.rootStore = rootStore;
+    constructor() {
         this.api = new BookService();
     }
-
-    @observable model = {
-        id: Number,
+  model = {
+        id: "",
         author: '',
         title: '',
         status: '',
@@ -25,6 +25,7 @@ export class NewBookViewStore {
     @observable loading = true;
     @observable description = '';
     @observable review = '';
+    @observable form = {}
 
     @action handleBookSubmit = async (form) => {
         this.loading = true;
@@ -58,10 +59,37 @@ export class NewBookViewStore {
             this.currentBook = uid[0];
             this.status = "success";
             this.loading = false;
+           console.log( this.form.values())
         } catch (error) {
             this.status = "error";
+        }finally {
+            this.form = new NewBookForm({
+                values: {
+                    author: this.model.author,
+                    title:this.model.title,
+                    status : this.model.status,
+                    id : this.model.id,
+                    node : this.currentBook,
+                    cover: this.model.cover,
+                    pages: this.model.pages,
+                    url: this.model.url,
+                }});
         }
     };
+    @action createForm(){
+        this.form = new NewBookForm({
+            values: {
+                id: "",
+                author: '',
+                title: '',
+                status: '',
+                cover:'',
+                pages: '',
+                review : '',
+                description : '',
+                url:''
+            }});
+    }
     @action  resetData = () =>{
         try {
             this.loading = true;
@@ -90,9 +118,9 @@ export class NewBookViewStore {
             }
         } catch (error) {
                 this.status = "error";
-        }finally {
         }
     };
+
 }
 
 
