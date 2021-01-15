@@ -1,7 +1,7 @@
 import {action, observable} from "mobx";
 
 
-export class BookDetailsUiStore {
+export class BookDetailsViewStore {
     constructor(rootStore) {
         this.rootStore = rootStore;
     }
