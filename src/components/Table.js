@@ -4,6 +4,9 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEdit, faEye, faPlus, faTrash} from "@fortawesome/free-solid-svg-icons";
 import Pagination from "./Pagination";
 import {Observer} from "mobx-react";
+import {SlideInFromLeft} from "./animations/SlideInFromLeft";
+import {SlideInFromRight} from "./animations/SlideInFromRight";
+import {AnimateAppearComponent} from "./animations/AnimateAppearComponent";
 
 const edit = <FontAwesomeIcon icon={faEdit} size={"sm"} />;
 const details = <FontAwesomeIcon icon={faEye} size={"sm"} />;
@@ -14,6 +17,7 @@ const Table = ({store, hasAddButton, libraryStore}) =>{
     return(
         <Observer>{() =>
             <div>
+                {store.loading === false ?<SlideInFromRight>
                 <table className="styled-table">
                     <thead>
                     <tr>
@@ -45,12 +49,14 @@ const Table = ({store, hasAddButton, libraryStore}) =>{
                     ))}
                     </tbody>
                 </table>
-                <Pagination
+                </SlideInFromRight> : null  }
+                <AnimateAppearComponent>  <Pagination
                     itemsPerPage={store.itemsPerPage}
                     active={store.page}
                     totalItems={store.apiData.length}
                     handler={store.handlePagination}
-                />
+                /></AnimateAppearComponent>
+
             </div>
         }</Observer>
         )

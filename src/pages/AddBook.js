@@ -2,16 +2,17 @@ import React from "react";
 import NewBookView from "../components/NewBookView";
 import {MainTitle} from "../components/MainTitle";
 import {useParams} from "react-router-dom";
+import {CardBox} from "../components/ui/CardBox";
 
 
 function  AddBook(){
     let {id} = useParams()
     return (
-            <div className="container-centered">
-                <div className="form-container">
+            <div className="full-width">
                     <MainTitle title={'Add a book'}/>
-                    <NewBookView id = {id}/>
-                </div>
+                    <CardBox title={'Add a book'} >
+                        <NewBookView id = {id}/>
+                    </CardBox>
              </div>
     );
 }

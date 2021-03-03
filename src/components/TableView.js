@@ -3,6 +3,9 @@ import {Observer} from 'mobx-react'
 import Spinner from "./animations/Spinner";
 import Table from "./Table";
 import TableFilters from "./TableFilters";
+import {SlideInFromLeft, SlideLeft} from "./animations/SlideInFromLeft";
+import {SlideInFromRight} from "./animations/SlideInFromRight";
+import {AnimateAppearComponent} from "./animations/AnimateAppearComponent";
 
 const TableView = ({data, hasAddButton,library}) => {
     const store = data;
@@ -15,9 +18,11 @@ const TableView = ({data, hasAddButton,library}) => {
          return(
              <Observer>{()=>
                  <div className="container">
-                     <TableFilters store={store}/>
+                    <AnimateAppearComponent>
+                        <TableFilters store={store}/>
+                    </AnimateAppearComponent>
                      {store.loading === true ? <Spinner/> : null}
-                     <Table  store = {store} hasAddButton={hasAddButton}  libraryStore={library}/>
+                         <Table  store = {store} hasAddButton={hasAddButton}  libraryStore={library}/>
                  </div>
              }
              </Observer>

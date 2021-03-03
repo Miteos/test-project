@@ -4,6 +4,7 @@ import validatorjs from "validatorjs";
 import {NewBookViewStore} from "../../stores/NewBookViewStore";
 
 
+
 export default class NewBookForm extends Form {
 
     constructor(props) {
@@ -63,17 +64,29 @@ export default class NewBookForm extends Form {
                     placeholder: "Enter Book Url*",
                     rules: "url"
                 },
+                {
+                    name:'image',
+                    type: 'file',
+                    hooks: {
+                        onDrop: field => console.log(field.files[0])
+
+                        // onSubmit: field => console.log('onSubmit', field.files),
+
+                    },
+                }
             ]
         };
     }
 
     hooks() {
         return {
-          async  onSuccess(form) {
+          async  onSuccess(form,image) {
+              image = form.$('image').files[0]
                 if(form.values().id === ""){
-                  await  this.store.handleBookSubmit(form);
+                  await  this.store.handleBookSubmit(form,image);
                 }
                 else await this.store.editBook(form);
+
             },
             onError(form) {
                 alert("Form has errors!");

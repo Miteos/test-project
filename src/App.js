@@ -8,10 +8,12 @@ import Home from "./pages/Home";
 import Libraries from "./pages/Libraries";
 import AddLibrary from "./pages/AddLibrary";
 import LibraryDetails from "./pages/LibraryDetails";
+import NavView from "./components/NavView";
 
 function App() {
   return (
       <Router>
+          <NavView/>
         <div className="App">
             <Switch>
                 <Route path="/" exact component={Home}/>

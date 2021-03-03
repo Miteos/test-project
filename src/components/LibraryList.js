@@ -1,9 +1,8 @@
 import React ,{useEffect} from 'react'
 import LibraryBox from "./ui/LibraryBox";
 import {Observer} from "mobx-react";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faTrash} from "@fortawesome/free-solid-svg-icons";
-const trash = <FontAwesomeIcon icon={faTrash} size={"sm"} />;
+import {  Trail, animated } from 'react-spring/renderprops'
+
 
 const LibraryList = ({store}) => {
 
@@ -14,18 +13,24 @@ const LibraryList = ({store}) => {
 
     return(
         <Observer>{() =>
-        <div>
-            {store.apiData.length === 0 ?
-                <p>Whoops! Seems like you dont have any libraries...</p>
-                : store.apiData.map((a,i)=>(
-                        <div key={i} className="library-list">
-                            <LibraryBox  title={a.library} id={a.id}/>
-                            <button className="icon-button" onClick={()=>store.deleteLibrary(a.id)}>{trash}</button>
-                        </div>
-                    )
-                )}
+            <div>
+                    <div className="grid-list">
+                        {store.apiData.length === 0 ?
+                            <p>Whoops! Seems like you dont have any libraries...</p> : null}
+                        {!store.loading ? <Trail
+                            items={store.apiData}
+                            from={{ marginLeft:-600, opacity: 0,transform: 'translate3d(0,-90px,0)'}}
+                            to={{  marginLeft: 0, opacity: 1,transform: 'translate3d(0,0px,0)' }}
+                        >
+                            {item => props => (
+                                <animated.div key={item.id} style={props} className="library-list">
+                                    <LibraryBox  title={item.library} id={item.id} store={store}/>
+                                </animated.div>
+                            )}
+                        </Trail>: null}
+                    </div>
+            </div>
 
-        </div>
         }</Observer>
     )
 }

@@ -7,7 +7,7 @@ import {LibraryViewStore} from "../stores/LibraryViewStore";
 const store = new LibraryViewStore();
 function  Libraries(){
     return (
-        <div>
+        <div className="full-width">
                 <MainTitle title={'Your libraries'} withLink/>
                 <LibraryView data = {store}/>
         </div>

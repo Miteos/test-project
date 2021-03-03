@@ -36,7 +36,7 @@ class LibraryDetailsView extends React.Component {
             }
         });
         return(
-            <div>
+            <div className="full-width">
                 <MainTitle withLink={true} title={this.store.model.library}/>
                 <div className="grid-oontainer">
                     <Card

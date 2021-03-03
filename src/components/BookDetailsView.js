@@ -5,6 +5,9 @@ import BookDescriptionForm from "./forms/BookDescriptionForm";
 import NewBookForm from "./forms/NewBookForm";
 import BookReviewForm from "./forms/BookReviewForm";
 import {MainTitle} from "./MainTitle";
+import {SlideInFromLeft} from "./animations/SlideInFromLeft";
+import {SlideInFromRight} from "./animations/SlideInFromRight";
+import {AnimateAppearComponent} from "./animations/AnimateAppearComponent";
 
 @inject('rootStore')
 @observer
@@ -49,30 +52,33 @@ class BookDetailsView extends React.Component {
                 url: this.store.model.url,
             }});
         return(
-            <div>
-                <MainTitle withLink={true} title={this.store.model.title}/>
+            <div className="full-width">
+                <AnimateAppearComponent> <MainTitle title={this.store.model.title}/></AnimateAppearComponent>
                 <div className="grid-oontainer">
-                    <Card
-                        title={"Book Details"}
-                        position={1}
-                        id = {this.id}
-                        details
-                        detForm = {detForm}
-                        store = {this.store}
-                        openState = {this.ui.detOpen}
-                        opener={this.ui.openDetailsForm}
-                    />
+                   <SlideInFromLeft>
+                        <Card
+                            title={"Book Details"}
+                            position={1}
+                            id = {this.id}
+                            details
+                            detForm = {detForm}
+                            store = {this.store}
+                            openState = {this.ui.detOpen}
+                            opener={this.ui.openDetailsForm}
+                        />
+                    </SlideInFromLeft>
+                    <SlideInFromRight>
                     <Card
                         title={"Book Description"}
                         position={2}
                         id = {this.id}
+                        className = "margin-0"
                         description
                         descForm = {descForm}
                         store = {this.store}
                         openState = {this.ui.descOpen}
                         opener={this.ui.openDescriptionForm}
                     />
-
                     <Card
                         title={"My Review"}
                         position={3}
@@ -83,7 +89,7 @@ class BookDetailsView extends React.Component {
                         openState = {this.ui.revOpen}
                         opener={this.ui.openReviewForm}
                     />
-
+                    </SlideInFromRight>
                 </div>
             </div>
         )

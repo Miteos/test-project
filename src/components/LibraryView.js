@@ -10,7 +10,7 @@ const LibraryView =({data})=>{
 
         return(
             <Observer>{() =>
-                <div>
+                <div className="centered">
                     <button className="green-button"><Link to='/add-library'>Add a Library</Link></button>
                     <LibraryList store={store}/>
                 </div>

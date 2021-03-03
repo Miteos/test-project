@@ -1,4 +1,4 @@
-import {action, observable} from "mobx";
+import {action, observable, runInAction} from "mobx";
 import {LibraryService} from "../components/services/LibraryService";
 import {BookService} from "../components/services/BookService";
 
@@ -25,7 +25,6 @@ export class LibraryViewStore {
     @observable.shallow filteredBookData = []
 
     @action  getBooks = async () => {
-        this.loading = true;
         let url = 'libraries/' + this.currentLibrary +'/books';
         try {
             const data = await this.bookApi.get(url);
@@ -44,11 +43,12 @@ export class LibraryViewStore {
         } catch (error) {
                 this.error = "error";
         }finally {
+            runInAction(()=>
                 this.loading = false
+            )
         }
     };
     @action  getData = async () => {
-        this.loading = true;
         try {
             const data = await this.api.get();
             if (data !==null){
@@ -58,7 +58,9 @@ export class LibraryViewStore {
         } catch (error) {
                 this.error = "error";
         }finally {
+            runInAction(()=>
                 this.loading = false
+            )
         }
     };
 
@@ -75,7 +77,9 @@ export class LibraryViewStore {
             this.model.books = toArray[0].books
             this.currentLibrary = uid[0];
             this.status = "success";
-            this.loading = false;
+            runInAction(()=>
+                this.loading = false
+            )
         }
         catch (error) {
                 this.status = "error";

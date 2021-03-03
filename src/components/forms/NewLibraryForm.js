@@ -33,6 +33,15 @@ export default class NewLibraryForm extends Form {
                     label: "Description of the library",
                     rules: "string",
                 } ,
+                {
+                    name: 'file',
+                    type: 'file',
+                    hooks: {
+                        onDrop: field => console.log(field.files[0].name),
+
+
+                    }
+                }
             ]
         };
     }

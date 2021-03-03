@@ -5,6 +5,7 @@ import NewBookForm from "../components/forms/NewBookForm";
 
 
 
+
 export class NewBookViewStore {
     constructor() {
         this.api = new BookService();
@@ -13,6 +14,7 @@ export class NewBookViewStore {
         id: "",
         author: '',
         title: '',
+        image:File,
         status: '',
         cover:'',
         pages: '',
@@ -23,13 +25,16 @@ export class NewBookViewStore {
     @observable currentBook = null;
     @observable status = '';
     @observable loading = true;
+    @observable imageFile = {}
     @observable description = '';
     @observable review = '';
     @observable form = {}
 
-    @action handleBookSubmit = async (form) => {
+    @action handleBookSubmit = async (form,image) => {
         this.loading = true;
         try {
+            this.imageFile = image
+            console.log(this.imageFile)
             this.model = form.values()
             this.model.id = uuid()
             await this.api.post(this.model);
@@ -42,8 +47,8 @@ export class NewBookViewStore {
         }
     };
     @action getBook = async (id) => {
+        this.loading = true;
         try {
-            this.loading = true;
             const getNode = await this.api.find(`?&orderBy="id"&equalTo="${id}"`);
             const uid = Object.keys(getNode);
             const toArray = Object.values(getNode);
@@ -68,6 +73,7 @@ export class NewBookViewStore {
                     author: this.model.author,
                     title:this.model.title,
                     status : this.model.status,
+                    image: this.model.image,
                     id : this.model.id,
                     node : this.currentBook,
                     cover: this.model.cover,
@@ -83,6 +89,7 @@ export class NewBookViewStore {
                 author: '',
                 title: '',
                 status: '',
+                image:File,
                 cover:'',
                 pages: '',
                 review : '',
@@ -98,6 +105,7 @@ export class NewBookViewStore {
             this.model.title = '';
             this.model.id = '';
             this.model.cover ='';
+            this.model.file ='';
             this.model.pages = '';
             this.model.url = '';
             this.model.description = '';

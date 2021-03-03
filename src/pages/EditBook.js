@@ -8,10 +8,8 @@ function  EditBook(){
     let { id } = useParams();
     return (
         <div className="container-centered">
-            <div className="form-container">
                 <MainTitle title={'Edit book'}/>
                 <NewBookView id = {id}/>
-            </div>
         </div>
 
     );

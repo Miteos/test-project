@@ -6,6 +6,8 @@ import AddBookForm from "../AddBookForm";
 import AddBookReviewForm from "../AddBookReviewForm";
 import {Observer} from "mobx-react";
 import AddLibraryForm from "../AddLibraryForm";
+import {SlideInFromLeft} from "../animations/SlideInFromLeft";
+import {AnimateAppearComponent} from "../animations/AnimateAppearComponent";
 
 const editIcon = <FontAwesomeIcon icon={faEdit} size={"sm"} />;
 
@@ -26,14 +28,14 @@ const Card= ({title, position,details,description,review, opener,openState,revFo
                                 </p>
                                 : null}
                             {description === true && openState ?
-                                <div className="textarea"><AddBookDescriptionForm form={descForm}/></div> : null}
+                                <div className="textarea"><AnimateAppearComponent><AddBookDescriptionForm form={descForm}/></AnimateAppearComponent></div> : null}
                             {review === true && !openState ?
                                 <p>
                                     {store.model.review === undefined ? 'Ooof! Seems like you didnt review this book, click edit button to add a review!' : store.model.review}
                                 </p>
                                 : null}
                             {review === true && openState ?
-                                <div className="textarea"><AddBookReviewForm form={revForm}/></div> : null}
+                                <div className="textarea"><AnimateAppearComponent><AddBookReviewForm form={revForm}/></AnimateAppearComponent></div> : null}
                             {details === true && !openState ?
                                 <div className="card-details">
                                     <p>Author: {store.model.author}</p>
@@ -47,7 +49,7 @@ const Card= ({title, position,details,description,review, opener,openState,revFo
                                 </div>
                                 : null}
                             {details === true && openState ?
-                                <div className="textarea"><AddBookForm form={detForm}/></div> : null}
+                                <div className="textarea"><AnimateAppearComponent><AddBookForm form={detForm}/></AnimateAppearComponent></div> : null}
                             {library === true && !openState ?
                                 <div className="card-details">
                                     <p>Library: {store.model.library}</p>
@@ -56,7 +58,7 @@ const Card= ({title, position,details,description,review, opener,openState,revFo
                                 </div>
                                 : null}
                             {library === true && openState ?
-                                <div className="textarea"><AddLibraryForm form={detLibraryForm}/></div> : null}
+                                <div className="textarea"><AnimateAppearComponent><AddLibraryForm form={detLibraryForm}/></AnimateAppearComponent></div> : null}
                         </div>
                     </div>
                 </div>

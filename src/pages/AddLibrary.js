@@ -4,11 +4,9 @@ import NewLibraryView from "../components/NewLibraryView";
 
 function  AddLibrary(){
     return (
-        <div className="container-centered">
-            <div className="form-container">
+        <div className="full-width">
             <MainTitle title={'Add library'}/>
             <NewLibraryView/>
-        </div>
         </div>
     );
 }

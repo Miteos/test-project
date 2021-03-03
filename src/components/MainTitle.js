@@ -8,7 +8,6 @@ export const MainTitle = ({title, withLink}) =>{
     return(
         <div className="flex-row">
             <h1 className='styled-title'>{title}</h1>
-            {withLink === true ?<Link to="/"><button className="icon-button">{home}</button></Link>:null}
         </div>
         )
 }

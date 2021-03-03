@@ -16,8 +16,8 @@ class NewBookView extends React.Component {
 
     render() {
         return (
-            <div className="form-width" >
-                <AddBookForm form ={this.props.dataStore.form} id ={this.id} goBack ={true}/>
+            <div>
+                <AddBookForm grid form ={this.props.dataStore.form} id ={this.id} goBack ={true}/>
              </div >
         );
     }
